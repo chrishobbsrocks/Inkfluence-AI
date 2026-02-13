@@ -186,13 +186,13 @@
     },
     "19": {
       "title": "Docker and Local Development Setup",
-      "status": "planning",
+      "status": "done",
       "epic": 1,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.2
     }
   },
   "epics": {
@@ -203,7 +203,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 7,
-      "completedSprints": 3,
+      "completedSprints": 4,
       "estimatedHours": 24.0
     },
     "2": {

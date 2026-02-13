@@ -3,12 +3,13 @@ sprint: 4
 title: "Book Data Layer and CRUD"
 type: fullstack
 epic: 2
-status: planning
+status: in-progress
 created: 2026-02-13T13:13:27Z
-started: null
+started: 2026-02-13T14:43:51Z
 completed: null
 hours: null
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 4: Book Data Layer and CRUD

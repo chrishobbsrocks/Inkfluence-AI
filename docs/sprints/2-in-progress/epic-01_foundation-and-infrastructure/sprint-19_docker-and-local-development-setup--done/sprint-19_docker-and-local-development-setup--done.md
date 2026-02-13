@@ -3,12 +3,13 @@ sprint: 19
 title: "Docker and Local Development Setup"
 type: fullstack
 epic: 1
-status: in-progress
+status: done
 created: 2026-02-13T13:29:16Z
 started: 2026-02-13T14:45:00Z
-completed: null
-hours: null
+completed: 2026-02-13
+hours: 0.5
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 19: Docker and Local Development Setup
@@ -138,6 +139,10 @@ Refactor `src/server/db/index.ts` to conditionally use either `@neondatabase/ser
 - [ ] New driver switching tests pass
 - [ ] `pnpm db:seed` populates sample data
 - [ ] Existing Neon production setup unaffected
+
+## Postmortem
+
+See [Sprint 19 Postmortem](./sprint-19_postmortem.md)
 
 ## Notes
 
