@@ -1,14 +1,83 @@
-import { AppHeader } from "@/components/app-shell";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { getUserByClerkId } from "@/server/queries/users";
+import { getBookById } from "@/server/queries/books";
+import { getOutlineByBookId, getOutlineWithSections } from "@/server/queries/outlines";
+import { WizardContainer } from "@/components/wizard";
+import { OutlineDisplay, OutlineHeader } from "@/components/outline";
+import { parseGapSuggestions } from "@/lib/ai/response-parser";
+import type { ConversationMessage } from "@/types/wizard";
 
-export default function OutlinePage() {
+export default async function OutlinePage({
+  params,
+}: {
+  params: Promise<{ bookId: string }>;
+}) {
+  const { userId: clerkId } = await auth();
+  if (!clerkId) redirect("/sign-in");
+
+  const user = await getUserByClerkId(clerkId);
+  if (!user) redirect("/sign-in");
+
+  const { bookId } = await params;
+  const book = await getBookById(bookId, user.id);
+  if (!book) redirect("/dashboard");
+
+  const outline = await getOutlineByBookId(bookId, user.id);
+
+  // Check if outline has sections (i.e. outline generation is complete)
+  let sections: Array<{
+    id: string;
+    chapterTitle: string;
+    keyPoints: unknown;
+    orderIndex: number;
+    aiSuggested: boolean | null;
+  }> = [];
+
+  if (outline) {
+    const result = await getOutlineWithSections(outline.id, user.id);
+    sections = result?.sections ?? [];
+  }
+
+  const userInitial = user.name?.[0]?.toUpperCase() ?? "U";
+
+  // If outline exists AND has sections -> show outline display
+  if (outline && sections.length > 0) {
+    // Extract gap suggestions from conversation history for the recommendations panel
+    const conversationHistory =
+      (outline.conversationHistory as ConversationMessage[]) ?? [];
+    const gaps = conversationHistory
+      .filter((m) => m.role === "assistant")
+      .flatMap((m) => parseGapSuggestions(m.content));
+
+    return (
+      <>
+        <OutlineHeader bookTitle={book.title} />
+        <div className="flex-1 bg-stone-50/50 overflow-y-auto">
+          <OutlineDisplay sections={sections} gaps={gaps} />
+        </div>
+      </>
+    );
+  }
+
+  // Otherwise show wizard (either start form or resume chat)
+  const outlineData = outline
+    ? {
+        id: outline.id,
+        conversationHistory:
+          (outline.conversationHistory as ConversationMessage[]) ?? [],
+        topic: outline.topic,
+        audience: outline.audience,
+        expertiseLevel: outline.expertiseLevel,
+      }
+    : null;
+
   return (
-    <>
-      <AppHeader title="Outline" />
-      <div className="flex-1 p-6">
-        <p className="text-sm text-stone-500">
-          Book outline editor will appear here.
-        </p>
-      </div>
-    </>
+    <WizardContainer
+      bookId={bookId}
+      bookTitle={book.title}
+      outline={outlineData}
+      userInitial={userInitial}
+    />
   );
 }

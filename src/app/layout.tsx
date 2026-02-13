@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Instrument_Serif } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
 
 const dmSans = DM_Sans({
@@ -34,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${instrumentSerif.variable} antialiased`}
       >
-        {children}
+        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   );
