@@ -66,13 +66,13 @@
     },
     "7": {
       "title": "Wizard UI and Outline Generation",
-      "status": "planning",
+      "status": "done",
       "epic": 3,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.5
     },
     "8": {
       "title": "Outline Editor UI",
@@ -223,7 +223,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 20.0
     },
     "4": {
