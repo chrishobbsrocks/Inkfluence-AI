@@ -3,11 +3,11 @@ sprint: 1
 title: "Project Bootstrap and Deploy"
 type: fullstack
 epic: 1
-status: in-progress
+status: done
 created: 2026-02-13T13:13:24Z
 started: 2026-02-13T13:36:13Z
-completed: null
-hours: null
+completed: 2026-02-13T13:45:00Z
+hours: 0.15
 workflow_version: "3.1.0"
 
 ---
@@ -88,6 +88,32 @@ workflow_version: "3.1.0"
 
 - [ ] All tests passing
 - [ ] Code reviewed
+
+## Postmortem
+
+### What Went Well
+- Clean scaffolding — Next.js 16 + shadcn/ui + Tailwind v4 initialized without major issues
+- shadcn/ui auto-detected stone palette and New York style correctly
+- All 3 smoke tests passed first try (health endpoint + home page render)
+- Build compiles clean with Turbopack, no TypeScript errors
+- Vercel ignore build script covers all documented skip/trigger patterns from CLAUDE.md
+
+### What Could Be Improved
+- `create-next-app` naming restriction on capitals required a temp directory workaround
+- Had to patch `sprint_lifecycle.py` hardcoded path — should read from `~/.claude/maestro-source`
+- Sprint file was still a blank template — ideally would have been filled in before starting
+
+### Decisions Made
+- Chose Vitest over Jest for faster ESM/TS support
+- Used `next/font/google` for DM Sans + Instrument Serif (no self-hosting needed)
+- Skipped Drizzle, Clerk, Docker, Anthropic SDK — all deferred to their respective sprints
+- Added `eslint-config-prettier` to avoid ESLint/Prettier conflicts
+
+### Metrics
+- Tests: 3/3 passing
+- Build: Clean (Turbopack, ~800ms)
+- Files created: 85 changed
+- Dependencies: 14 production + dev
 
 ## Notes
 
