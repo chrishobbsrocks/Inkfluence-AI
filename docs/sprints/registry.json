@@ -6,13 +6,13 @@
   "sprints": {
     "1": {
       "title": "Project Bootstrap and Deploy",
-      "status": "planning",
+      "status": "done",
       "epic": 1,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.2
     },
     "2": {
       "title": "Database ORM and Auth",
@@ -203,7 +203,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 7,
-      "completedSprints": 0,
+      "completedSprints": 1,
       "estimatedHours": 24.0
     },
     "2": {
