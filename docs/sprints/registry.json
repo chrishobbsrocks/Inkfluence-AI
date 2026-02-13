@@ -1,8 +1,282 @@
 {
   "counters": {
-    "next_sprint": 1,
+    "next_sprint": 20,
     "next_epic": 1
   },
-  "sprints": {},
-  "epics": {}
+  "sprints": {
+    "1": {
+      "title": "Project Bootstrap and Deploy",
+      "status": "planning",
+      "epic": 1,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "2": {
+      "title": "Database ORM and Auth",
+      "status": "planning",
+      "epic": 1,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "3": {
+      "title": "App Shell and Navigation",
+      "status": "planning",
+      "epic": 1,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "4": {
+      "title": "Book Data Layer and CRUD",
+      "status": "planning",
+      "epic": 2,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "5": {
+      "title": "Dashboard UI",
+      "status": "planning",
+      "epic": 2,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "6": {
+      "title": "Claude API Integration and Chat Engine",
+      "status": "planning",
+      "epic": 3,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "7": {
+      "title": "Wizard UI and Outline Generation",
+      "status": "planning",
+      "epic": 3,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "8": {
+      "title": "Outline Editor UI",
+      "status": "planning",
+      "epic": 4,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "9": {
+      "title": "AI Recommendations and Coverage",
+      "status": "planning",
+      "epic": 4,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "10": {
+      "title": "Rich Text Editor Setup",
+      "status": "planning",
+      "epic": 5,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "11": {
+      "title": "AI Content Generation Engine",
+      "status": "planning",
+      "epic": 5,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "12": {
+      "title": "AI Writing Assistant Panel",
+      "status": "planning",
+      "epic": 5,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "13": {
+      "title": "Preview and Template System",
+      "status": "planning",
+      "epic": 6,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "14": {
+      "title": "Export Engine PDF EPUB",
+      "status": "planning",
+      "epic": 6,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "15": {
+      "title": "QA Scoring and Analysis Engine",
+      "status": "planning",
+      "epic": 7,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "16": {
+      "title": "QA UI and Auto Fix",
+      "status": "planning",
+      "epic": 7,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "17": {
+      "title": "Metadata and Pre-publish Workflow",
+      "status": "planning",
+      "epic": 8,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "18": {
+      "title": "Platform Management and Publishing",
+      "status": "planning",
+      "epic": 8,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    },
+    "19": {
+      "title": "Docker and Local Development Setup",
+      "status": "planning",
+      "epic": 1,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
+    }
+  },
+  "epics": {
+    "1": {
+      "title": "Foundation and Infrastructure",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 7,
+      "completedSprints": 0,
+      "estimatedHours": 24.0
+    },
+    "2": {
+      "title": "Book Management and Dashboard",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 4,
+      "completedSprints": 0,
+      "estimatedHours": 16.0
+    },
+    "3": {
+      "title": "AI Knowledge Extraction Wizard",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 4,
+      "completedSprints": 0,
+      "estimatedHours": 20.0
+    },
+    "4": {
+      "title": "Outline Editor",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 4,
+      "completedSprints": 0,
+      "estimatedHours": 16.0
+    },
+    "5": {
+      "title": "Content Generation and Chapter Editor",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 6,
+      "completedSprints": 0,
+      "estimatedHours": 24.0
+    },
+    "6": {
+      "title": "Preview Format and Export",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 4,
+      "completedSprints": 0,
+      "estimatedHours": 20.0
+    },
+    "7": {
+      "title": "Quality Assurance Assistant",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 4,
+      "completedSprints": 0,
+      "estimatedHours": 16.0
+    },
+    "8": {
+      "title": "Publishing Hub",
+      "status": "planning",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "totalSprints": 4,
+      "completedSprints": 0,
+      "estimatedHours": 16.0
+    }
+  },
+  "nextEpicNumber": 9,
+  "nextSprintNumber": 20
 }
