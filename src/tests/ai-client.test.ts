@@ -35,8 +35,9 @@ describe("Anthropic client", () => {
   it("returns same singleton on subsequent calls", async () => {
     vi.stubEnv("ANTHROPIC_API_KEY", "sk-test-key");
 
-    const instance = {};
-    const MockAnthropic = vi.fn().mockReturnValue(instance);
+    const MockAnthropic = vi.fn(function (this: Record<string, unknown>) {
+      this.mock = true;
+    });
     vi.doMock("@anthropic-ai/sdk", () => ({
       default: MockAnthropic,
     }));
@@ -52,7 +53,9 @@ describe("Anthropic client", () => {
   it("resetClient allows re-initialization", async () => {
     vi.stubEnv("ANTHROPIC_API_KEY", "sk-test-key");
 
-    const MockAnthropic = vi.fn().mockReturnValue({});
+    const MockAnthropic = vi.fn(function (this: Record<string, unknown>) {
+      this.mock = true;
+    });
     vi.doMock("@anthropic-ai/sdk", () => ({
       default: MockAnthropic,
     }));
