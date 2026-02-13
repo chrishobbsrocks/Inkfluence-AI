@@ -36,13 +36,13 @@
     },
     "4": {
       "title": "Book Data Layer and CRUD",
-      "status": "planning",
+      "status": "done",
       "epic": 2,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.3
     },
     "5": {
       "title": "Dashboard UI",
@@ -213,7 +213,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 0,
+      "completedSprints": 1,
       "estimatedHours": 16.0
     },
     "3": {
