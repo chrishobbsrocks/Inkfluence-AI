@@ -3,12 +3,13 @@ sprint: 2
 title: "Database ORM and Auth"
 type: fullstack
 epic: 1
-status: planning
+status: in-progress
 created: 2026-02-13T13:13:25Z
-started: null
+started: 2026-02-13T13:48:02Z
 completed: null
 hours: null
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 2: Database ORM and Auth
