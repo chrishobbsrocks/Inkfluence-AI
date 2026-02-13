@@ -3,12 +3,13 @@ sprint: 3
 title: "App Shell and Navigation"
 type: fullstack
 epic: 1
-status: planning
+status: in-progress
 created: 2026-02-13T13:13:26Z
-started: null
+started: 2026-02-13T14:32:01Z
 completed: null
 hours: null
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 3: App Shell and Navigation
