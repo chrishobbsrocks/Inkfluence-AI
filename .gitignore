@@ -1,0 +1,3 @@
+# Sprint workflow state files
+.claude/sprint-*-state.json
+.claude/product-state.json
