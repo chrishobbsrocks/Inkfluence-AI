@@ -1,10 +1,20 @@
 import { neon, type NeonQueryFunction } from "@neondatabase/serverless";
-import { drizzle, type NeonHttpDatabase } from "drizzle-orm/neon-http";
+import { drizzle as drizzleNeon } from "drizzle-orm/neon-http";
+import { drizzle as drizzlePostgres } from "drizzle-orm/postgres-js";
+import type { PgDatabase, PgQueryResultHKT } from "drizzle-orm/pg-core";
+import postgres from "postgres";
 import * as schema from "./schema";
 
-let _db: NeonHttpDatabase<typeof schema> | null = null;
+// Shared type across both drivers — consumers use standard Drizzle query API
+export type Database = PgDatabase<PgQueryResultHKT, typeof schema>;
 
-export function getDb(): NeonHttpDatabase<typeof schema> {
+let _db: Database | null = null;
+
+function usePostgresJs(): boolean {
+  return process.env.DB_DRIVER === "postgres-js";
+}
+
+export function getDb(): Database {
   if (_db) return _db;
 
   const url = process.env.DATABASE_URL;
@@ -14,16 +24,20 @@ export function getDb(): NeonHttpDatabase<typeof schema> {
     );
   }
 
-  const sql: NeonQueryFunction<boolean, boolean> = neon(url);
-  _db = drizzle(sql, { schema });
+  if (usePostgresJs()) {
+    const client = postgres(url);
+    _db = drizzlePostgres(client, { schema }) as unknown as Database;
+  } else {
+    const sql: NeonQueryFunction<boolean, boolean> = neon(url);
+    _db = drizzleNeon(sql, { schema }) as unknown as Database;
+  }
+
   return _db;
 }
 
 // Convenience getter — same lazy behavior, shorter import
-export const db = new Proxy({} as NeonHttpDatabase<typeof schema>, {
+export const db = new Proxy({} as Database, {
   get(_target, prop) {
     return (getDb() as unknown as Record<string | symbol, unknown>)[prop];
   },
 });
-
-export type Database = NeonHttpDatabase<typeof schema>;

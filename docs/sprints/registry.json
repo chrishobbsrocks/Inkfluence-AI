@@ -26,13 +26,13 @@
     },
     "3": {
       "title": "App Shell and Navigation",
-      "status": "planning",
+      "status": "done",
       "epic": 1,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.2
     },
     "4": {
       "title": "Book Data Layer and CRUD",
@@ -203,7 +203,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 7,
-      "completedSprints": 2,
+      "completedSprints": 3,
       "estimatedHours": 24.0
     },
     "2": {
