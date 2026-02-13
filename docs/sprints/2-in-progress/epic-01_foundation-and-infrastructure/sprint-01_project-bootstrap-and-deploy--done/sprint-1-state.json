@@ -1,0 +1,69 @@
+{
+  "sprint_number": 1,
+  "sprint_file": "docs/sprints/2-in-progress/epic-01_foundation-and-infrastructure/sprint-01_project-bootstrap-and-deploy/sprint-01_project-bootstrap-and-deploy.md",
+  "sprint_title": "Project Bootstrap and Deploy",
+  "status": "complete",
+  "current_phase": 4,
+  "current_step": "4.4",
+  "started_at": "2026-02-13T13:36:13Z",
+  "workflow_version": "3.0",
+  "completed_steps": [
+    {
+      "step": "1.1",
+      "completed_at": "2026-02-13T13:36:28.747009"
+    },
+    {
+      "step": "1.2",
+      "completed_at": "2026-02-13T13:39:57.550233"
+    },
+    {
+      "step": "1.3",
+      "completed_at": "2026-02-13T13:40:55.395309"
+    },
+    {
+      "step": "1.4",
+      "completed_at": "2026-02-13T13:40:58.573874"
+    },
+    {
+      "step": "2.1",
+      "completed_at": "2026-02-13T13:44:18.951919"
+    },
+    {
+      "step": "2.2",
+      "completed_at": "2026-02-13T13:44:23.616990"
+    },
+    {
+      "step": "2.3",
+      "completed_at": "2026-02-13T13:44:23.658026"
+    },
+    {
+      "step": "3.1",
+      "completed_at": "2026-02-13T13:44:23.697345"
+    },
+    {
+      "step": "3.2",
+      "completed_at": "2026-02-13T13:44:32.233096"
+    },
+    {
+      "step": "3.3",
+      "completed_at": "2026-02-13T13:44:32.271658"
+    },
+    {
+      "step": "3.4",
+      "completed_at": "2026-02-13T13:44:32.309322"
+    },
+    {
+      "step": "4.1",
+      "completed_at": "2026-02-13T13:44:32.349233"
+    },
+    {
+      "step": "4.2",
+      "completed_at": "2026-02-13T13:44:32.389682"
+    },
+    {
+      "step": "4.3",
+      "completed_at": "2026-02-13T13:44:59.214007"
+    }
+  ],
+  "completed_at": "2026-02-13T13:46:56.597086-08:00"
+}

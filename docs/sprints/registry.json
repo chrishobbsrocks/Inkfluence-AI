@@ -16,13 +16,13 @@
     },
     "2": {
       "title": "Database ORM and Auth",
-      "status": "planning",
+      "status": "done",
       "epic": 1,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.7
     },
     "3": {
       "title": "App Shell and Navigation",
@@ -203,7 +203,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 7,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 24.0
     },
     "2": {
