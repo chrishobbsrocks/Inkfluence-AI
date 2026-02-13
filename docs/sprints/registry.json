@@ -56,13 +56,13 @@
     },
     "6": {
       "title": "Claude API Integration and Chat Engine",
-      "status": "planning",
+      "status": "done",
       "epic": 3,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.3
     },
     "7": {
       "title": "Wizard UI and Outline Generation",
@@ -223,7 +223,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 0,
+      "completedSprints": 1,
       "estimatedHours": 20.0
     },
     "4": {

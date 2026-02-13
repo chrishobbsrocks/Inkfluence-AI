@@ -1,0 +1,65 @@
+{
+  "sprint_number": 5,
+  "sprint_file": "docs/sprints/2-in-progress/epic-02_book-management-and-dashboard/sprint-05_dashboard-ui/sprint-05_dashboard-ui.md",
+  "sprint_title": "Dashboard UI",
+  "status": "complete",
+  "current_phase": 4,
+  "current_step": "4.3",
+  "started_at": "2026-02-13T15:02:10Z",
+  "workflow_version": "3.0",
+  "completed_steps": [
+    {
+      "step": "1.1",
+      "completed_at": "2026-02-13T15:02:20.998562"
+    },
+    {
+      "step": "1.2",
+      "completed_at": "2026-02-13T15:06:12.810135"
+    },
+    {
+      "step": "1.3",
+      "completed_at": "2026-02-13T15:06:49.942797"
+    },
+    {
+      "step": "1.4",
+      "completed_at": "2026-02-13T15:06:49.980690"
+    },
+    {
+      "step": "2.1",
+      "completed_at": "2026-02-13T15:09:14.060398"
+    },
+    {
+      "step": "2.2",
+      "completed_at": "2026-02-13T15:09:14.097187"
+    },
+    {
+      "step": "2.3",
+      "completed_at": "2026-02-13T15:09:14.133049"
+    },
+    {
+      "step": "3.1",
+      "completed_at": "2026-02-13T15:09:14.169551"
+    },
+    {
+      "step": "3.2",
+      "completed_at": "2026-02-13T15:09:14.206027"
+    },
+    {
+      "step": "3.3",
+      "completed_at": "2026-02-13T15:09:14.241419"
+    },
+    {
+      "step": "3.4",
+      "completed_at": "2026-02-13T15:09:14.276570"
+    },
+    {
+      "step": "4.1",
+      "completed_at": "2026-02-13T15:09:14.312190"
+    },
+    {
+      "step": "4.2",
+      "completed_at": "2026-02-13T15:09:14.348782"
+    }
+  ],
+  "completed_at": "2026-02-13T15:12:01.297344-08:00"
+}
