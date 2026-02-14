@@ -7,6 +7,7 @@ import { BookPreviewTab } from "./book-preview-tab";
 import { CoverDesignTab } from "./cover-design-tab";
 import { TableOfContentsTab } from "./table-of-contents-tab";
 import { FormatOptionsPanel } from "./format-options-panel";
+import { useExport } from "@/hooks/use-export";
 import { BOOK_TEMPLATES, DEFAULT_TEMPLATE_ID } from "@/lib/templates";
 import type { PreviewTab, PreviewChapter } from "@/types/preview";
 
@@ -30,6 +31,9 @@ export function PreviewWrapper({
     BOOK_TEMPLATES.find((t) => t.id === selectedTemplateId) ??
     BOOK_TEMPLATES[0]!;
 
+  const { status: exportStatus, activeFormat, error: exportError, exportBook } =
+    useExport({ bookId, templateId: selectedTemplateId });
+
   const handleChapterSelectFromToc = useCallback(
     (index: number) => {
       setCurrentChapterIndex(index);
@@ -40,7 +44,13 @@ export function PreviewWrapper({
 
   return (
     <>
-      <PreviewHeader bookId={bookId} />
+      <PreviewHeader
+        bookId={bookId}
+        onExport={exportBook}
+        exportStatus={exportStatus}
+        activeFormat={activeFormat}
+        exportError={exportError}
+      />
       <div className="flex-1 bg-stone-50/50 p-5 overflow-y-auto">
         <div
           className="grid gap-4"
@@ -76,6 +86,9 @@ export function PreviewWrapper({
             selectedTemplateId={selectedTemplateId}
             selectedTemplate={selectedTemplate}
             onTemplateSelect={setSelectedTemplateId}
+            onExport={exportBook}
+            exportStatus={exportStatus}
+            activeFormat={activeFormat}
           />
         </div>
       </div>

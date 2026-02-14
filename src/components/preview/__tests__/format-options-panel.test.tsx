@@ -13,6 +13,9 @@ describe("FormatOptionsPanel", () => {
         selectedTemplateId="modern"
         selectedTemplate={modernTemplate}
         onTemplateSelect={() => {}}
+        onExport={() => {}}
+        exportStatus="idle"
+        activeFormat={null}
       />
     );
     expect(screen.getByText("Formatting Options")).toBeInTheDocument();
@@ -25,6 +28,9 @@ describe("FormatOptionsPanel", () => {
         selectedTemplateId="modern"
         selectedTemplate={modernTemplate}
         onTemplateSelect={() => {}}
+        onExport={() => {}}
+        exportStatus="idle"
+        activeFormat={null}
       />
     );
     expect(screen.getByText("Template")).toBeInTheDocument();
@@ -37,6 +43,9 @@ describe("FormatOptionsPanel", () => {
         selectedTemplateId="modern"
         selectedTemplate={modernTemplate}
         onTemplateSelect={() => {}}
+        onExport={() => {}}
+        exportStatus="idle"
+        activeFormat={null}
       />
     );
     expect(screen.getByText("DM Sans")).toBeInTheDocument();
@@ -51,6 +60,9 @@ describe("FormatOptionsPanel", () => {
         selectedTemplateId="modern"
         selectedTemplate={modernTemplate}
         onTemplateSelect={() => {}}
+        onExport={() => {}}
+        exportStatus="idle"
+        activeFormat={null}
       />
     );
     expect(screen.getByText("PDF")).toBeInTheDocument();
@@ -65,6 +77,9 @@ describe("FormatOptionsPanel", () => {
         selectedTemplateId="modern"
         selectedTemplate={modernTemplate}
         onTemplateSelect={() => {}}
+        onExport={() => {}}
+        exportStatus="idle"
+        activeFormat={null}
       />
     );
     expect(screen.getByText("Generate AI Cover")).toBeInTheDocument();
@@ -78,6 +93,9 @@ describe("FormatOptionsPanel", () => {
         selectedTemplateId="classic"
         selectedTemplate={classicTemplate}
         onTemplateSelect={() => {}}
+        onExport={() => {}}
+        exportStatus="idle"
+        activeFormat={null}
       />
     );
     expect(screen.getByText("Georgia")).toBeInTheDocument();

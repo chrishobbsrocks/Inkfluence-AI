@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, Sparkles } from "lucide-react";
+import { Download, Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,12 +11,17 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { TemplateSelector } from "./template-selector";
 import type { BookTemplate } from "@/types/preview";
+import type { ExportFormat } from "@/lib/export/types";
+import type { ExportStatus } from "@/hooks/use-export";
 
 interface FormatOptionsPanelProps {
   templates: BookTemplate[];
   selectedTemplateId: string;
   selectedTemplate: BookTemplate;
   onTemplateSelect: (templateId: string) => void;
+  onExport: (format: ExportFormat) => void;
+  exportStatus: ExportStatus;
+  activeFormat: ExportFormat | null;
 }
 
 function getFontDisplayName(fontValue: string): string {
@@ -38,12 +43,23 @@ function getMarginsLabel(template: BookTemplate): string {
   return "Narrow";
 }
 
+const EXPORT_FORMATS: Array<{ format: ExportFormat | "mobi"; label: string }> = [
+  { format: "pdf", label: "PDF" },
+  { format: "epub", label: "EPUB" },
+  { format: "mobi", label: "MOBI" },
+];
+
 export function FormatOptionsPanel({
   templates,
   selectedTemplateId,
   selectedTemplate,
   onTemplateSelect,
+  onExport,
+  exportStatus,
+  activeFormat,
 }: FormatOptionsPanelProps) {
+  const isExporting = exportStatus === "generating";
+
   return (
     <Card className="border-stone-200 h-fit">
       <CardHeader className="p-3.5 pb-2 bg-stone-50 rounded-t-lg border-b border-stone-100">
@@ -105,17 +121,31 @@ export function FormatOptionsPanel({
             Export
           </div>
           <div className="space-y-1.5">
-            {["PDF", "EPUB", "MOBI"].map((format) => (
-              <Button
-                key={format}
-                variant="outline"
-                size="sm"
-                className="w-full h-7 text-[10px] gap-1"
-                disabled
-              >
-                <Download className="w-3 h-3" /> {format}
-              </Button>
-            ))}
+            {EXPORT_FORMATS.map(({ format, label }) => {
+              const isMobi = format === "mobi";
+              const isActive = isExporting && activeFormat === format;
+
+              return (
+                <Button
+                  key={format}
+                  variant="outline"
+                  size="sm"
+                  className="w-full h-7 text-[10px] gap-1"
+                  disabled={isMobi || isExporting}
+                  title={isMobi ? "MOBI export coming soon" : undefined}
+                  onClick={
+                    isMobi ? undefined : () => onExport(format as ExportFormat)
+                  }
+                >
+                  {isActive ? (
+                    <Loader2 className="w-3 h-3 animate-spin" />
+                  ) : (
+                    <Download className="w-3 h-3" />
+                  )}
+                  {label}
+                </Button>
+              );
+            })}
           </div>
         </div>
       </CardContent>
