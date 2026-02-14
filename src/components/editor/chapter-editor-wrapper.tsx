@@ -12,6 +12,7 @@ import { ChapterEditorLayout } from "./chapter-editor-layout";
 import { AiContentBlock } from "./extensions/ai-content-block";
 import { useChapterEditor } from "@/hooks/use-chapter-editor";
 import { useChapterGeneration } from "@/hooks/use-chapter-generation";
+import { useAiPanelState } from "@/hooks/use-ai-panel-state";
 import { countWords } from "@/lib/word-count";
 
 interface ChapterInfo {
@@ -25,12 +26,14 @@ interface ChapterEditorWrapperProps {
   bookId: string;
   currentChapter: ChapterInfo;
   nextChapterId: string | null;
+  chapterKeyPoints?: string[];
 }
 
 export function ChapterEditorWrapper({
   bookId,
   currentChapter,
   nextChapterId,
+  chapterKeyPoints = [],
 }: ChapterEditorWrapperProps) {
   const { state, dispatch } = useChapterEditor(
     {
@@ -44,6 +47,11 @@ export function ChapterEditorWrapper({
   const generation = useChapterGeneration({
     chapterId: currentChapter.id,
     bookId,
+  });
+
+  const panelState = useAiPanelState({
+    keyPoints: chapterKeyPoints,
+    editorWordCount: state.wordCount ?? 0,
   });
 
   const isGenerating =
@@ -77,6 +85,15 @@ export function ChapterEditorWrapper({
     },
   });
 
+  // Store regenerate callback in extension storage so NodeView can access it
+  useEffect(() => {
+    if (editor) {
+      editor.storage.aiContentBlock.onRegenerate = () => {
+        generation.generate(panelState.tone, panelState.expertise);
+      };
+    }
+  }, [editor, generation, panelState.tone, panelState.expertise]);
+
   // Track previous streamed content length to avoid unnecessary updates
   const prevContentLengthRef = useRef(0);
 
@@ -97,12 +114,13 @@ export function ChapterEditorWrapper({
       const wrappedHtml = `<div data-ai-content="true">${generation.streamedContent}</div>`;
       // Triggers onUpdate -> auto-save
       editor.commands.setContent(wrappedHtml);
+      panelState.incrementGeneratedCount();
     }
   }, [editor, generation.status, generation.streamedContent]);
 
   const handleAiGenerate = useCallback(() => {
-    generation.generate("professional", "intermediate");
-  }, [generation]);
+    generation.generate(panelState.tone, panelState.expertise);
+  }, [generation, panelState.tone, panelState.expertise]);
 
   return (
     <TooltipProvider>
@@ -118,8 +136,18 @@ export function ChapterEditorWrapper({
         editor={editor}
         title={state.title}
         onTitleChange={(title) => dispatch({ type: "SET_TITLE", title })}
-        isGenerating={isGenerating}
-        onAiGenerate={handleAiGenerate}
+        aiPanel={{
+          tone: panelState.tone,
+          expertise: panelState.expertise,
+          onToneChange: panelState.setTone,
+          onExpertiseChange: panelState.setExpertise,
+          wordCount: panelState.wordCount,
+          targetWordCount: panelState.targetWordCount,
+          progressPercent: panelState.progressPercent,
+          sections: panelState.sections,
+          isGenerating,
+          onGenerate: handleAiGenerate,
+        }}
       />
     </TooltipProvider>
   );

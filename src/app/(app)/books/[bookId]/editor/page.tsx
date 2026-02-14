@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getUserByClerkId } from "@/server/queries/users";
 import { getBookById } from "@/server/queries/books";
 import { getChaptersByBookId } from "@/server/queries/chapters";
+import { getOutlineByBookId, getOutlineWithSections } from "@/server/queries/outlines";
 import { AppHeader } from "@/components/app-shell";
 import { ChapterEditorWrapper } from "@/components/editor";
 import { BookOpen } from "lucide-react";
@@ -65,6 +66,19 @@ export default async function EditorPage({
   const nextChapter =
     currentIdx < chapters.length - 1 ? chapters[currentIdx + 1]! : null;
 
+  // Fetch outline sections for key points
+  let chapterKeyPoints: string[] = [];
+  const outline = await getOutlineByBookId(bookId, user.id);
+  if (outline) {
+    const outlineData = await getOutlineWithSections(outline.id, user.id);
+    if (outlineData) {
+      const matchingSection = outlineData.sections.find(
+        (s) => s.orderIndex === currentChapter.orderIndex
+      );
+      chapterKeyPoints = (matchingSection?.keyPoints as string[]) ?? [];
+    }
+  }
+
   return (
     <ChapterEditorWrapper
       bookId={bookId}
@@ -75,6 +89,7 @@ export default async function EditorPage({
         orderIndex: currentChapter.orderIndex,
       }}
       nextChapterId={nextChapter?.id ?? null}
+      chapterKeyPoints={chapterKeyPoints}
     />
   );
 }

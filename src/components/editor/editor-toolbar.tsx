@@ -11,8 +11,6 @@ import {
   List,
   ListOrdered,
   ImageIcon,
-  Sparkles,
-  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -61,15 +59,9 @@ function ToolbarButton({
 
 interface EditorToolbarProps {
   editor: Editor | null;
-  isGenerating?: boolean;
-  onAiGenerate?: () => void;
 }
 
-export function EditorToolbar({
-  editor,
-  isGenerating = false,
-  onAiGenerate,
-}: EditorToolbarProps) {
+export function EditorToolbar({ editor }: EditorToolbarProps) {
   if (!editor) return null;
 
   return (
@@ -140,15 +132,6 @@ export function EditorToolbar({
         tooltip="Image (coming soon)"
         disabled
         onClick={() => {}}
-      />
-
-      <Separator orientation="vertical" className="h-5 mx-1" />
-
-      <ToolbarButton
-        icon={isGenerating ? Loader2 : Sparkles}
-        tooltip={isGenerating ? "Generating..." : "AI Generate Chapter"}
-        disabled={!editor || isGenerating}
-        onClick={() => onAiGenerate?.()}
       />
     </div>
   );

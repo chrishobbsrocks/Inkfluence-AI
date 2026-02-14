@@ -1,4 +1,6 @@
 import { Node, mergeAttributes } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+import { AiContentBlockView } from "./ai-content-block-view";
 
 declare module "@tiptap/core" {
   interface Commands<ReturnType> {
@@ -41,6 +43,16 @@ export const AiContentBlock = Node.create({
       }),
       0,
     ];
+  },
+
+  addStorage() {
+    return {
+      onRegenerate: undefined as (() => void) | undefined,
+    };
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(AiContentBlockView);
   },
 
   addCommands() {
