@@ -146,13 +146,13 @@
     },
     "15": {
       "title": "QA Scoring and Analysis Engine",
-      "status": "planning",
+      "status": "done",
       "epic": 7,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.3
     },
     "16": {
       "title": "QA UI and Auto Fix",
@@ -263,7 +263,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 0,
+      "completedSprints": 1,
       "estimatedHours": 16.0
     },
     "8": {
