@@ -216,13 +216,13 @@
     },
     "22": {
       "title": "Production Hardening",
-      "status": "planning",
+      "status": "done",
       "epic": null,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.5
     }
   },
   "epics": {

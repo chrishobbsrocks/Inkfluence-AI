@@ -2,12 +2,13 @@
 sprint: 22
 title: "Production Hardening"
 epic: null
-status: in-progress
+status: done
 created: 2026-02-13T21:17:12Z
 started: 2026-02-13T21:17:12Z
-completed: null
+completed: 2026-02-13
 hours: null
 workflow_version: "3.5.0"
+
 
 ---
 

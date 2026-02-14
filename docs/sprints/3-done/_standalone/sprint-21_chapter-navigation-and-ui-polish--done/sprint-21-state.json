@@ -1,0 +1,69 @@
+{
+  "sprint_number": 21,
+  "sprint_file": "docs/sprints/2-in-progress/sprint-21_chapter-navigation-and-ui-polish/sprint.md",
+  "sprint_title": "Chapter Navigation and UI Polish",
+  "status": "complete",
+  "current_phase": 4,
+  "current_step": "4.4",
+  "started_at": "2026-02-13T21:17:03Z",
+  "workflow_version": "3.0",
+  "completed_steps": [
+    {
+      "step": "1.1",
+      "completed_at": "2026-02-13T21:17:13.157033"
+    },
+    {
+      "step": "1.2",
+      "completed_at": "2026-02-13T21:20:19.395888"
+    },
+    {
+      "step": "1.3",
+      "completed_at": "2026-02-13T21:24:16.370414"
+    },
+    {
+      "step": "1.4",
+      "completed_at": "2026-02-13T21:24:18.896970"
+    },
+    {
+      "step": "2.1",
+      "completed_at": "2026-02-13T21:27:17.842936"
+    },
+    {
+      "step": "2.2",
+      "completed_at": "2026-02-13T21:27:17.880681"
+    },
+    {
+      "step": "2.3",
+      "completed_at": "2026-02-13T21:27:17.919057"
+    },
+    {
+      "step": "3.1",
+      "completed_at": "2026-02-13T21:27:17.956437"
+    },
+    {
+      "step": "3.2",
+      "completed_at": "2026-02-13T21:27:17.995512"
+    },
+    {
+      "step": "3.3",
+      "completed_at": "2026-02-13T21:27:18.034500"
+    },
+    {
+      "step": "3.4",
+      "completed_at": "2026-02-13T21:27:23.025955"
+    },
+    {
+      "step": "4.1",
+      "completed_at": "2026-02-13T21:27:23.062504"
+    },
+    {
+      "step": "4.2",
+      "completed_at": "2026-02-13T21:27:48.487610"
+    },
+    {
+      "step": "4.3",
+      "completed_at": "2026-02-13T21:27:48.526422"
+    }
+  ],
+  "completed_at": "2026-02-13T21:30:43.002093-08:00"
+}
