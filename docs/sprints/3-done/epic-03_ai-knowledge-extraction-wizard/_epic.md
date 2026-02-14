@@ -1,10 +1,12 @@
 ---
 epic: 3
 title: "AI Knowledge Extraction Wizard"
-status: planning
+status: done
 created: 2026-02-13
 started: null
-completed: null
+completed: 2026-02-13T16:16:09Z
+
+total_hours: 18.0
 ---
 
 # Epic 3: AI Knowledge Extraction Wizard
