@@ -58,3 +58,20 @@ export interface QAAnalysisResult {
 export interface QAAnalyzeRequest {
   bookId: string;
 }
+
+/** Request body for POST /api/qa/fix */
+export interface QAFixRequest {
+  bookId: string;
+  chapterId: string;
+  suggestionId: string;
+  originalText: string;
+  suggestedFix: string;
+}
+
+/** Response body for POST /api/qa/fix */
+export interface QAFixResponse {
+  success: boolean;
+  chapterId: string;
+  suggestionId: string;
+  updatedWordCount: number;
+}
