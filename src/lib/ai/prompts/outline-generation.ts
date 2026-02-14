@@ -1,4 +1,5 @@
 import type { ConversationMessage } from "@/types/wizard";
+import { HUMAN_VOICE_RULES } from "./constants";
 
 export function buildOutlinePrompt(
   conversationHistory: ConversationMessage[],
@@ -29,6 +30,8 @@ Analyze the conversation and create a comprehensive book outline that:
 3. Includes 5-15 chapters with descriptive titles
 4. Lists 3-7 key points per chapter
 5. Marks any AI-suggested chapters that fill gaps not explicitly discussed
+
+${HUMAN_VOICE_RULES}
 
 Generate a JSON object with this exact structure:
 {

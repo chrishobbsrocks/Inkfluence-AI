@@ -1,3 +1,16 @@
+---
+sprint: 19
+title: "Sprint 19"
+epic: 1
+status: in-progress
+created: 2026-02-13T18:29:39Z
+started: 2026-02-13T18:29:39Z
+completed: null
+hours: null
+workflow_version: "3.5.0"
+
+---
+
 # Sprint 19 Postmortem: Docker and Local Development Setup
 
 ## Metrics

@@ -1,10 +1,12 @@
 ---
 epic: 8
 title: "Publishing Hub"
-status: planning
+status: done
 created: 2026-02-13
 started: null
-completed: null
+completed: 2026-02-13T19:57:39Z
+
+total_hours: 0.3
 ---
 
 # Epic 8: Publishing Hub

@@ -3,11 +3,11 @@ sprint: 20
 title: "Bug Fixes and Polish Pass"
 type: fullstack
 epic: null
-status: in-progress
+status: done
 created: 2026-02-13T20:49:45Z
 started: 2026-02-13T20:56:46Z
-completed: null
-hours: null
+completed: 2026-02-13
+hours: 0.2
 workflow_version: "3.1.0"
 
 
@@ -101,6 +101,24 @@ Direct bug fixes in existing files. Server action pattern for outline-to-chapter
 
 - [ ] All tests passing
 - [ ] Code reviewed
+
+## Postmortem
+
+### What went well
+- All 8 bug fixes were straightforward once the data flow was traced
+- Idempotency guard pattern prevents double-creation of chapters
+- Existing test infrastructure caught no regressions (686 tests stable)
+- Polish scan confirmed no remaining UI inconsistencies
+
+### What could be improved
+- The outline→chapters plumbing should have been part of Sprint 8 (Outline Editor)
+- Wizard stepper mapping was incorrect from initial implementation — better review of step indices needed
+- aiSuggested flag was missed in the wizard action but present in the schema
+
+### Key metrics
+- Tests: 686 passing (82 files)
+- Build: Clean
+- Files changed: 6 (3 wizard, 2 chapters, 1 outline header)
 
 ## Notes
 

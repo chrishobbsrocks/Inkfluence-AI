@@ -1,0 +1,65 @@
+{
+  "sprint_number": 18,
+  "sprint_file": "docs/sprints/2-in-progress/epic-08_publishing-hub/sprint-18_platform-management-and-publishing/sprint-18_platform-management-and-publishing.md",
+  "sprint_title": "Platform Management and Publishing",
+  "status": "complete",
+  "current_phase": 4,
+  "current_step": "4.3",
+  "started_at": "2026-02-13T18:10:13Z",
+  "workflow_version": "3.0",
+  "completed_steps": [
+    {
+      "step": "1.1",
+      "completed_at": "2026-02-13T18:11:24.491172"
+    },
+    {
+      "step": "1.2",
+      "completed_at": "2026-02-13T18:16:00.688682"
+    },
+    {
+      "step": "1.3",
+      "completed_at": "2026-02-13T18:16:38.353756"
+    },
+    {
+      "step": "1.4",
+      "completed_at": "2026-02-13T18:16:38.395785"
+    },
+    {
+      "step": "2.1",
+      "completed_at": "2026-02-13T18:26:55.766549"
+    },
+    {
+      "step": "2.2",
+      "completed_at": "2026-02-13T18:26:58.874344"
+    },
+    {
+      "step": "2.3",
+      "completed_at": "2026-02-13T18:27:02.416691"
+    },
+    {
+      "step": "3.1",
+      "completed_at": "2026-02-13T18:27:06.392276"
+    },
+    {
+      "step": "3.2",
+      "completed_at": "2026-02-13T18:27:11.125621"
+    },
+    {
+      "step": "3.3",
+      "completed_at": "2026-02-13T18:27:14.938979"
+    },
+    {
+      "step": "3.4",
+      "completed_at": "2026-02-13T18:27:17.933555"
+    },
+    {
+      "step": "4.1",
+      "completed_at": "2026-02-13T18:27:43.640222"
+    },
+    {
+      "step": "4.2",
+      "completed_at": "2026-02-13T18:28:10.719596"
+    }
+  ],
+  "completed_at": "2026-02-13T18:28:55.162227-08:00"
+}

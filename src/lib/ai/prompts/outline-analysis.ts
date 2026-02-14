@@ -1,3 +1,5 @@
+import { HUMAN_VOICE_RULES } from "./constants";
+
 interface AnalysisChapter {
   chapterTitle: string;
   keyPoints: string[];
@@ -45,7 +47,9 @@ For coverage assessment:
 - Identify 4-8 major topic areas relevant to the book
 - Rate each as "well-covered", "partial", or "gap"
 
-Provide an overall completeness score from 0-100.`;
+Provide an overall completeness score from 0-100.
+
+${HUMAN_VOICE_RULES}`;
 }
 
 export const outlineAnalysisTool = {

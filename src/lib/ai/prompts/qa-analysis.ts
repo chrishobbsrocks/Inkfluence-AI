@@ -1,3 +1,5 @@
+import { HUMAN_VOICE_RULES } from "./constants";
+
 interface QAChapterInput {
   title: string;
   content: string;
@@ -45,7 +47,12 @@ For each issue found, provide a suggestion with:
 - A brief suggested fix if auto-fixable
 
 Provide a 1-2 sentence summary for each dimension explaining the score.
-Limit to the 10 most impactful suggestions.`;
+Limit to the 10 most impactful suggestions.
+
+## AI Detection Check
+Additionally, flag any passages that sound obviously AI-generated. Specifically check for:
+${HUMAN_VOICE_RULES}
+If the chapter violates these voice rules, include suggestions under the "readability" dimension with severity "major".`;
 }
 
 /** Build the cross-chapter consistency check prompt */

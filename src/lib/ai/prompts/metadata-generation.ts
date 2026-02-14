@@ -1,3 +1,5 @@
+import { HUMAN_VOICE_RULES } from "./constants";
+
 /** Build the metadata generation prompt */
 export function buildMetadataGenerationPrompt(
   bookTitle: string,
@@ -31,7 +33,9 @@ Generate the following metadata:
 2. **Keywords**: Provide up to 7 relevant keyword tags that potential readers would search for. Focus on specific, discoverable terms (not generic ones like "book" or "ebook").
 
 3. **Category**: Suggest the single most appropriate category from this list:
-   Business & Money, Self-Help, Health & Fitness, Technology, Education & Teaching, Science & Nature, Arts & Photography, Biographies & Memoirs, Cooking & Food, History, Religion & Spirituality, Travel, Parenting & Relationships, Politics & Social Sciences, Other`;
+   Business & Money, Self-Help, Health & Fitness, Technology, Education & Teaching, Science & Nature, Arts & Photography, Biographies & Memoirs, Cooking & Food, History, Religion & Spirituality, Travel, Parenting & Relationships, Politics & Social Sciences, Other
+
+${HUMAN_VOICE_RULES}`;
 }
 
 /** Claude tool_use schema for metadata generation */

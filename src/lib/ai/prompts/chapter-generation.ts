@@ -1,4 +1,5 @@
 import type { ChapterGenerationContext } from "@/types/chapter-generation";
+import { HUMAN_VOICE_RULES } from "./constants";
 
 const TONE_INSTRUCTIONS: Record<string, string> = {
   professional:
@@ -54,7 +55,9 @@ Write the chapter content as **clean HTML** suitable for a rich text editor. Use
 5. End with a summary or transition paragraph to the next chapter.
 6. Do NOT include a chapter title heading — that is handled separately by the editor.
 7. Do NOT include meta-commentary about the writing process.
-8. Maintain voice consistency with previous chapters if context is provided.`,
+8. Maintain voice consistency with previous chapters if context is provided.
+
+${HUMAN_VOICE_RULES}`,
   ];
 
   if (context.previousChapterSummaries.length > 0) {

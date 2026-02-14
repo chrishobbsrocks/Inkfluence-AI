@@ -1,5 +1,5 @@
 import type { WizardState } from "@/types/wizard";
-import { TARGET_QUESTION_COUNT } from "./constants";
+import { TARGET_QUESTION_COUNT, HUMAN_VOICE_RULES } from "./constants";
 
 function getPhaseInstructions(state: WizardState): string {
   switch (state.phase) {
@@ -97,5 +97,7 @@ When you detect a knowledge gap, emit:
 When ready to generate the outline, emit:
 <phase_signal>ready_for_outline</phase_signal>
 
-These tags will be parsed programmatically. Include them naturally within your response.`;
+These tags will be parsed programmatically. Include them naturally within your response.
+
+${HUMAN_VOICE_RULES}`;
 }
