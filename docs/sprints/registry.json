@@ -136,13 +136,13 @@
     },
     "14": {
       "title": "Export Engine PDF EPUB",
-      "status": "planning",
+      "status": "done",
       "epic": 6,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.3
     },
     "15": {
       "title": "QA Scoring and Analysis Engine",
@@ -253,7 +253,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 20.0
     },
     "7": {

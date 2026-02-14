@@ -6,9 +6,10 @@ epic: 6
 status: done
 created: 2026-02-13T13:13:39Z
 started: 2026-02-13T17:03:10Z
-completed: 2026-02-13T17:20:00Z
+completed: 2026-02-13
 hours: 0.3
 workflow_version: "3.1.0"
+
 
 ---
 
