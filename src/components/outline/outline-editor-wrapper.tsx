@@ -1,17 +1,18 @@
 "use client";
 
+import { useCallback } from "react";
 import { OutlineHeader } from "./outline-header";
 import { OutlineEditor } from "./outline-editor";
 import { AiRecommendationsPanel } from "./ai-recommendations-panel";
 import { useOutlineEditor, type EditorSection } from "@/hooks/use-outline-editor";
-import type { GapSuggestion } from "@/types/wizard";
+import { useOutlineAnalysis } from "@/hooks/use-outline-analysis";
+import type { OutlineSuggestion } from "@/types/outline-analysis";
 
 interface OutlineEditorWrapperProps {
   bookId: string;
   bookTitle: string;
   outlineId: string;
   initialSections: EditorSection[];
-  gaps: GapSuggestion[];
 }
 
 export function OutlineEditorWrapper({
@@ -19,11 +20,35 @@ export function OutlineEditorWrapper({
   bookTitle,
   outlineId,
   initialSections,
-  gaps,
 }: OutlineEditorWrapperProps) {
   const { sections, saveStatus, dispatch, addChapter } = useOutlineEditor(
     initialSections,
     outlineId
+  );
+
+  const {
+    status,
+    error,
+    visibleSuggestions,
+    dismissSuggestion,
+    refresh,
+    analysis,
+  } = useOutlineAnalysis({
+    outlineId,
+    sectionCount: sections.length,
+  });
+
+  const handleAddSuggestion = useCallback(
+    (suggestion: OutlineSuggestion) => {
+      dispatch({
+        type: "ADD_CHAPTER",
+        title: suggestion.chapterTitle,
+        keyPoints: suggestion.keyPoints,
+        insertAfterIndex: suggestion.insertAfterIndex,
+      });
+      dismissSuggestion(suggestion.id);
+    },
+    [dispatch, dismissSuggestion]
   );
 
   return (
@@ -43,7 +68,17 @@ export function OutlineEditorWrapper({
             dispatch={dispatch}
             saveStatus={saveStatus}
           />
-          <AiRecommendationsPanel gaps={gaps} />
+          <AiRecommendationsPanel
+            suggestions={visibleSuggestions}
+            coverage={analysis?.coverage ?? []}
+            overallScore={analysis?.overallScore ?? 0}
+            summary={analysis?.summary ?? ""}
+            status={status}
+            error={error}
+            onAddSuggestion={handleAddSuggestion}
+            onDismiss={dismissSuggestion}
+            onRefresh={refresh}
+          />
         </div>
       </div>
     </>

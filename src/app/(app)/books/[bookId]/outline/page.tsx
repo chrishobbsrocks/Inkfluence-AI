@@ -5,7 +5,6 @@ import { getBookById } from "@/server/queries/books";
 import { getOutlineByBookId, getOutlineWithSections } from "@/server/queries/outlines";
 import { WizardContainer } from "@/components/wizard";
 import { OutlineEditorWrapper } from "@/components/outline";
-import { parseGapSuggestions } from "@/lib/ai/response-parser";
 import type { ConversationMessage } from "@/types/wizard";
 
 export default async function OutlinePage({
@@ -41,15 +40,8 @@ export default async function OutlinePage({
 
   const userInitial = user.name?.[0]?.toUpperCase() ?? "U";
 
-  // If outline exists AND has sections -> show outline display
+  // If outline exists AND has sections -> show outline editor
   if (outline && sections.length > 0) {
-    // Extract gap suggestions from conversation history for the recommendations panel
-    const conversationHistory =
-      (outline.conversationHistory as ConversationMessage[]) ?? [];
-    const gaps = conversationHistory
-      .filter((m) => m.role === "assistant")
-      .flatMap((m) => parseGapSuggestions(m.content));
-
     const editorSections = sections.map((s) => ({
       id: s.id,
       chapterTitle: s.chapterTitle,
@@ -64,7 +56,6 @@ export default async function OutlinePage({
         bookTitle={book.title}
         outlineId={outline.id}
         initialSections={editorSections}
-        gaps={gaps}
       />
     );
   }

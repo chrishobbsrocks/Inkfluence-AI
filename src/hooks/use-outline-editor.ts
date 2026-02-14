@@ -21,7 +21,7 @@ interface OutlineEditorState {
 
 export type OutlineEditorAction =
   | { type: "REORDER"; fromIndex: number; toIndex: number }
-  | { type: "ADD_CHAPTER"; title?: string }
+  | { type: "ADD_CHAPTER"; title?: string; keyPoints?: string[]; insertAfterIndex?: number }
   | { type: "REMOVE_CHAPTER"; sectionId: string }
   | { type: "UPDATE_TITLE"; sectionId: string; title: string }
   | { type: "ADD_SUB_SECTION"; sectionId: string; text?: string }
@@ -76,10 +76,25 @@ export function outlineEditorReducer(
       const newSection: EditorSection = {
         id: generateTempId(),
         chapterTitle: title,
-        keyPoints: [],
+        keyPoints: action.keyPoints ?? [],
         orderIndex: state.sections.length,
-        aiSuggested: false,
+        aiSuggested: !!action.keyPoints,
       };
+
+      if (
+        action.insertAfterIndex !== undefined &&
+        action.insertAfterIndex >= -1 &&
+        action.insertAfterIndex < state.sections.length
+      ) {
+        const insertAt = action.insertAfterIndex + 1;
+        const next = [
+          ...state.sections.slice(0, insertAt),
+          newSection,
+          ...state.sections.slice(insertAt),
+        ];
+        return { ...state, sections: reindex(next) };
+      }
+
       return {
         ...state,
         sections: [...state.sections, newSection],

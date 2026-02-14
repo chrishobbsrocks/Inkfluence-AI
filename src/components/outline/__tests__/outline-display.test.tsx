@@ -28,28 +28,25 @@ const mockSections = [
 
 describe("OutlineDisplay", () => {
   it("renders chapter count", () => {
-    render(<OutlineDisplay sections={mockSections} gaps={[]} />);
+    render(<OutlineDisplay sections={mockSections} />);
     expect(screen.getByText("Chapters (3)")).toBeInTheDocument();
   });
 
   it("renders all chapter titles", () => {
-    render(<OutlineDisplay sections={mockSections} gaps={[]} />);
+    render(<OutlineDisplay sections={mockSections} />);
     expect(screen.getByText("Introduction")).toBeInTheDocument();
     expect(screen.getByText("Core Concepts")).toBeInTheDocument();
     expect(screen.getByText("Advanced Topics")).toBeInTheDocument();
   });
 
-  it("renders AI recommendations panel", () => {
-    render(<OutlineDisplay sections={mockSections} gaps={[]} />);
-    expect(screen.getByText("AI Recommendations")).toBeInTheDocument();
+  it("renders key points for chapters", () => {
+    render(<OutlineDisplay sections={mockSections} />);
+    expect(screen.getByText("Overview")).toBeInTheDocument();
+    expect(screen.getByText("Goals")).toBeInTheDocument();
   });
 
-  it("shows gap suggestions in recommendations panel", () => {
-    const gaps = [
-      { area: "Marketing", description: "Missing marketing section", importance: "high" as const },
-    ];
-    render(<OutlineDisplay sections={mockSections} gaps={gaps} />);
-    expect(screen.getByText("Marketing")).toBeInTheDocument();
-    expect(screen.getByText("Missing marketing section")).toBeInTheDocument();
+  it("shows AI suggested badge for AI-suggested chapters", () => {
+    render(<OutlineDisplay sections={mockSections} />);
+    expect(screen.getByText("AI suggested")).toBeInTheDocument();
   });
 });
