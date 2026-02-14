@@ -9,6 +9,12 @@ declare module "@tiptap/core" {
       unsetAiContentBlock: () => ReturnType;
     };
   }
+
+  interface Storage {
+    aiContentBlock: {
+      onRegenerate: (() => void) | undefined;
+    };
+  }
 }
 
 export const AiContentBlock = Node.create({

@@ -106,8 +106,8 @@ export function ChapterEditorWrapper({
     ) {
       prevContentLengthRef.current = generation.streamedContent.length;
       const wrappedHtml = `<div data-ai-content="true">${generation.streamedContent}</div>`;
-      // false = don't emit onUpdate (prevents auto-save during streaming)
-      editor.commands.setContent(wrappedHtml, false);
+      // emitUpdate: false = don't emit onUpdate (prevents auto-save during streaming)
+      editor.commands.setContent(wrappedHtml, { emitUpdate: false });
     }
     if (generation.status === "complete" && generation.streamedContent) {
       prevContentLengthRef.current = 0;
