@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Eye, ArrowRight } from "lucide-react";
+import { Eye, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { AppHeader } from "@/components/app-shell";
 import type { SaveStatus } from "@/hooks/use-chapter-editor";
@@ -13,6 +13,7 @@ interface ChapterEditorHeaderProps {
   title: string;
   saveStatus: SaveStatus;
   lastSavedAt: Date | null;
+  previousChapterId: string | null;
   nextChapterId: string | null;
 }
 
@@ -44,6 +45,7 @@ export function ChapterEditorHeader({
   title,
   saveStatus,
   lastSavedAt,
+  previousChapterId,
   nextChapterId,
 }: ChapterEditorHeaderProps) {
   const router = useRouter();
@@ -57,6 +59,21 @@ export function ChapterEditorHeader({
           {saveStatus === "saved" && `Auto-saved ${timeAgo}`}
           {saveStatus === "error" && "Save failed"}
         </span>
+        {previousChapterId && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="h-7 text-[11px] gap-1"
+            onClick={() =>
+              router.push(
+                `/books/${bookId}/editor?chapter=${previousChapterId}`
+              )
+            }
+          >
+            <ArrowLeft className="w-3 h-3" />
+            Previous
+          </Button>
+        )}
         <Button
           variant="outline"
           size="sm"

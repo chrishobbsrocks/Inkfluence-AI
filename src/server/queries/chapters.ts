@@ -1,4 +1,4 @@
-import { eq, and, asc, gt, lt } from "drizzle-orm";
+import { eq, and, asc, desc, gt, lt } from "drizzle-orm";
 import { db } from "@/server/db";
 import { chapters, books } from "@/server/db/schema";
 
@@ -49,6 +49,29 @@ export async function getChaptersByBookId(bookId: string, userId: string) {
     .orderBy(asc(chapters.orderIndex));
 
   return result.map((r) => r.chapter);
+}
+
+/** Get the previous chapter before the given orderIndex */
+export async function getPreviousChapter(
+  bookId: string,
+  currentOrderIndex: number,
+  userId: string
+) {
+  const result = await db
+    .select({ chapter: chapters })
+    .from(chapters)
+    .innerJoin(books, eq(chapters.bookId, books.id))
+    .where(
+      and(
+        eq(chapters.bookId, bookId),
+        eq(books.userId, userId),
+        lt(chapters.orderIndex, currentOrderIndex)
+      )
+    )
+    .orderBy(desc(chapters.orderIndex))
+    .limit(1);
+
+  return result[0]?.chapter ?? null;
 }
 
 /** Get the next chapter after the given orderIndex */

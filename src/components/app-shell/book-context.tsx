@@ -2,9 +2,17 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 
+interface ChapterSummary {
+  id: string;
+  title: string;
+  orderIndex: number;
+  status: string;
+}
+
 interface BookContextValue {
   bookId: string;
   bookTitle: string;
+  chapters: ChapterSummary[];
 }
 
 const BookContext = createContext<BookContextValue | null>(null);
@@ -36,16 +44,18 @@ const BookSetterContext = createContext<
 export function BookContextSetter({
   bookId,
   bookTitle,
+  chapters = [],
 }: {
   bookId: string;
   bookTitle: string;
+  chapters?: ChapterSummary[];
 }) {
   const setBook = useContext(BookSetterContext);
 
   useEffect(() => {
-    setBook({ bookId, bookTitle });
+    setBook({ bookId, bookTitle, chapters });
     return () => setBook(null);
-  }, [bookId, bookTitle, setBook]);
+  }, [bookId, bookTitle, chapters, setBook]);
 
   return null;
 }

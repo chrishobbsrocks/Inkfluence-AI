@@ -25,6 +25,7 @@ interface ChapterInfo {
 interface ChapterEditorWrapperProps {
   bookId: string;
   currentChapter: ChapterInfo;
+  previousChapterId: string | null;
   nextChapterId: string | null;
   chapterKeyPoints?: string[];
 }
@@ -32,6 +33,7 @@ interface ChapterEditorWrapperProps {
 export function ChapterEditorWrapper({
   bookId,
   currentChapter,
+  previousChapterId,
   nextChapterId,
   chapterKeyPoints = [],
 }: ChapterEditorWrapperProps) {
@@ -130,6 +132,7 @@ export function ChapterEditorWrapper({
         title={state.title}
         saveStatus={state.saveStatus}
         lastSavedAt={state.lastSavedAt}
+        previousChapterId={previousChapterId}
         nextChapterId={nextChapterId}
       />
       <ChapterEditorLayout

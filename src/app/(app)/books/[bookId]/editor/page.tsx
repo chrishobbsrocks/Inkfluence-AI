@@ -61,8 +61,9 @@ export default async function EditorPage({
     ? chapters.find((c) => c.id === chapterIdParam) ?? chapters[0]!
     : chapters[0]!;
 
-  // Find next chapter
+  // Find previous and next chapters
   const currentIdx = chapters.findIndex((c) => c.id === currentChapter.id);
+  const previousChapter = currentIdx > 0 ? chapters[currentIdx - 1]! : null;
   const nextChapter =
     currentIdx < chapters.length - 1 ? chapters[currentIdx + 1]! : null;
 
@@ -88,6 +89,7 @@ export default async function EditorPage({
         content: currentChapter.content,
         orderIndex: currentChapter.orderIndex,
       }}
+      previousChapterId={previousChapter?.id ?? null}
       nextChapterId={nextChapter?.id ?? null}
       chapterKeyPoints={chapterKeyPoints}
     />

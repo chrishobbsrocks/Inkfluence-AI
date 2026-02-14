@@ -5,6 +5,7 @@ import { BookContextProvider, BookContextSetter } from "../book-context";
 
 vi.mock("next/navigation", () => ({
   usePathname: vi.fn(() => "/dashboard"),
+  useSearchParams: vi.fn(() => new URLSearchParams()),
 }));
 
 vi.mock("@clerk/nextjs", () => ({
