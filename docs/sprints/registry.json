@@ -176,13 +176,13 @@
     },
     "18": {
       "title": "Platform Management and Publishing",
-      "status": "planning",
+      "status": "done",
       "epic": 8,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.3
     },
     "19": {
       "title": "Docker and Local Development Setup",
@@ -273,7 +273,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 16.0
     }
   },
