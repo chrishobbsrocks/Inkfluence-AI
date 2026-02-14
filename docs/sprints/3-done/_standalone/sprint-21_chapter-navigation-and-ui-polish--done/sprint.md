@@ -2,12 +2,13 @@
 sprint: 21
 title: "Chapter Navigation and UI Polish"
 epic: null
-status: in-progress
+status: done
 created: 2026-02-13T21:17:03Z
 started: 2026-02-13T21:17:03Z
-completed: null
-hours: null
+completed: 2026-02-13
+hours: 0.3
 workflow_version: "3.5.0"
+
 
 ---
 
@@ -149,6 +150,23 @@ Infrastructure already exists:
 - [ ] Navigation between chapters preserves unsaved work (auto-save triggers)
 - [ ] Logo matches wireframe spec (icon container, font, colors, layout)
 - [ ] Build passes clean on Vercel
+
+## Postmortem
+
+### What went well
+- Mirroring the existing getNextChapter/nextChapterId pattern made Previous Chapter trivial
+- Upgrading book layout from client to server component fixed the "Untitled Book" bug for free
+- Collapsible component from shadcn provided accessible expand/collapse out of the box
+- Only 1 collateral test failure (app-sidebar missing useSearchParams mock) — quick fix
+
+### What could be improved
+- BookContext now accepts a chapters array which re-renders on every reference change — should memoize in layout
+- The chapter list doesn't auto-scroll to the active chapter if there are many chapters
+
+### Key metrics
+- Tests: 690 passing (+4 new sidebar tests)
+- Build: Clean
+- Files changed: 10
 
 ## Notes
 

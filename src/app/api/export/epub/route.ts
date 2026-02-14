@@ -49,10 +49,22 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Book not found" }, { status: 404 });
   }
 
-  const chapters = await getChaptersByBookId(bookId, user.id);
-  if (chapters.length === 0) {
+  const allChapters = await getChaptersByBookId(bookId, user.id);
+  if (allChapters.length === 0) {
     return NextResponse.json(
       { error: "Book has no chapters to export" },
+      { status: 422 }
+    );
+  }
+
+  // Filter out chapters with no content
+  const chapters = allChapters.filter(
+    (c) => c.content && c.content.trim().length > 0
+  );
+
+  if (chapters.length === 0) {
+    return NextResponse.json(
+      { error: "No chapters have content yet. Write at least one chapter before exporting." },
       { status: 422 }
     );
   }
@@ -69,13 +81,18 @@ export async function POST(request: NextRequest) {
       template
     );
 
-    return new Response(new Uint8Array(epubBuffer), {
-      headers: {
-        "Content-Type": "application/epub+zip",
-        "Content-Disposition": `attachment; filename="${sanitizeFilename(book.title)}.epub"`,
-        "Content-Length": String(epubBuffer.length),
-      },
-    });
+    const skippedCount = allChapters.length - chapters.length;
+    const headers: Record<string, string> = {
+      "Content-Type": "application/epub+zip",
+      "Content-Disposition": `attachment; filename="${sanitizeFilename(book.title)}.epub"`,
+      "Content-Length": String(epubBuffer.length),
+    };
+
+    if (skippedCount > 0) {
+      headers["X-Export-Warning"] = `${chapters.length} of ${allChapters.length} chapters included (${skippedCount} chapters have no content yet)`;
+    }
+
+    return new Response(new Uint8Array(epubBuffer), { headers });
   } catch (err) {
     console.error("EPUB generation failed:", err);
     return NextResponse.json(

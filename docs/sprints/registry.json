@@ -1,6 +1,6 @@
 {
   "counters": {
-    "next_sprint": 21,
+    "next_sprint": 23,
     "next_epic": 1
   },
   "sprints": {
@@ -203,6 +203,26 @@
       "started": null,
       "completed": "2026-02-13",
       "hours": 8.1
+    },
+    "21": {
+      "title": "Chapter Navigation and UI Polish",
+      "status": "done",
+      "epic": null,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": "2026-02-13",
+      "hours": 8.2
+    },
+    "22": {
+      "title": "Production Hardening",
+      "status": "planning",
+      "epic": null,
+      "type": "fullstack",
+      "created": "2026-02-13",
+      "started": null,
+      "completed": null,
+      "hours": null
     }
   },
   "epics": {
@@ -288,5 +308,5 @@
     }
   },
   "nextEpicNumber": 9,
-  "nextSprintNumber": 21
+  "nextSprintNumber": 23
 }

@@ -7,4 +7,5 @@ export * from "./enums";
 export * from "./qa-analyses";
 export * from "./book-metadata";
 export * from "./publishing-platforms";
+export * from "./rate-limits";
 export * from "./relations";

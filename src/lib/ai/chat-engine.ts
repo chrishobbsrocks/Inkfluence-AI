@@ -21,6 +21,7 @@ import {
   parsePhaseSignal,
   stripStructuredTags,
 } from "./response-parser";
+import { truncateConversationHistory } from "./token-counter";
 import {
   AI_MODEL,
   STREAM_MAX_TOKENS,
@@ -46,8 +47,11 @@ export async function sendMessageStreaming(
   const client = getAnthropicClient();
   const systemPrompt = buildSystemPrompt(wizardState);
 
+  // Truncate conversation history to stay within token budget
+  const truncated = truncateConversationHistory(conversationHistory);
+
   const messages = [
-    ...conversationHistory.map((m) => ({
+    ...truncated.map((m) => ({
       role: m.role as "user" | "assistant",
       content: m.content,
     })),

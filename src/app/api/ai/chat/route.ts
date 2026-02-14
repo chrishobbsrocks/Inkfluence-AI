@@ -9,6 +9,10 @@ import {
   deriveWizardState,
 } from "@/lib/ai/chat-engine";
 import { stripStructuredTags } from "@/lib/ai/response-parser";
+import {
+  checkAndIncrementRateLimit,
+  AI_RATE_LIMITS,
+} from "@/server/rate-limit";
 import type { ConversationMessage } from "@/types/wizard";
 
 export async function POST(request: NextRequest) {
@@ -41,6 +45,26 @@ export async function POST(request: NextRequest) {
   }
 
   const { outlineId, message } = parseResult.data;
+
+  // Check rate limit
+  const rateLimit = await checkAndIncrementRateLimit(
+    user.id,
+    AI_RATE_LIMITS.chat
+  );
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      {
+        error: `Rate limit exceeded. You can send up to ${AI_RATE_LIMITS.chat.maxRequests} messages per hour. Please try again later.`,
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(rateLimit.retryAfterSeconds ?? 3600),
+          "X-RateLimit-Remaining": "0",
+        },
+      }
+    );
+  }
 
   // Verify outline exists and belongs to user (through book ownership)
   const outline = await getOutlineById(outlineId, user.id);

@@ -82,6 +82,41 @@ export async function saveOutlineSections(
   return { success: true, data: result };
 }
 
+/** Delete all sections for an outline (to allow re-running the wizard) */
+export async function deleteOutlineSections(
+  outlineId: string
+): Promise<MutationResult<{ deleted: number }>> {
+  const result = await db
+    .delete(outlineSections)
+    .where(eq(outlineSections.outlineId, outlineId))
+    .returning();
+
+  return { success: true, data: { deleted: result.length } };
+}
+
+/** Reset outline for wizard re-run: clear sections and conversation */
+export async function resetOutlineForWizard(
+  outlineId: string
+): Promise<MutationResult<Outline>> {
+  // Delete sections first
+  await db
+    .delete(outlineSections)
+    .where(eq(outlineSections.outlineId, outlineId));
+
+  // Reset conversation history
+  const result = await db
+    .update(outlines)
+    .set({ conversationHistory: [] })
+    .where(eq(outlines.id, outlineId))
+    .returning();
+
+  if (!result[0]) {
+    return { success: false, error: "Outline not found", code: "NOT_FOUND" };
+  }
+
+  return { success: true, data: result[0] };
+}
+
 /** Update outline metadata (audience, expertise level) */
 export async function updateOutlineMetadata(
   outlineId: string,

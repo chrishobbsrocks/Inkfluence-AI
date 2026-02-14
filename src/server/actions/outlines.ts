@@ -4,7 +4,10 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { getUserByClerkId } from "@/server/queries/users";
 import { getOutlineById } from "@/server/queries/outlines";
-import { saveOutlineSections } from "@/server/mutations/outlines";
+import {
+  saveOutlineSections,
+  resetOutlineForWizard,
+} from "@/server/mutations/outlines";
 import { saveOutlineSectionsSchema } from "@/lib/validations/outlines";
 import type { OutlineSection } from "@/server/db/schema";
 
@@ -54,4 +57,27 @@ export async function saveOutlineEditorAction(
   revalidatePath(`/books`);
 
   return { success: true, data: result.data };
+}
+
+/** Reset outline sections and conversation to allow re-running the wizard */
+export async function resetOutlineForWizardAction(
+  outlineId: string
+): Promise<ActionResult<null>> {
+  const userResult = await requireUser();
+  if (!userResult.success) return userResult;
+
+  // Verify ownership
+  const outline = await getOutlineById(outlineId, userResult.data.id);
+  if (!outline) {
+    return { success: false, error: "Outline not found" };
+  }
+
+  const result = await resetOutlineForWizard(outlineId);
+  if (!result.success) {
+    return { success: false, error: result.error };
+  }
+
+  revalidatePath(`/books`);
+
+  return { success: true, data: null };
 }

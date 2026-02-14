@@ -7,34 +7,49 @@ import { updateChapterContent } from "@/server/mutations/chapters";
 import { qaFixRequestSchema } from "@/lib/validations/qa-fix";
 import { countWords } from "@/lib/word-count";
 
-/** Replace text in HTML content, matching across tag boundaries */
+/** Replace text in HTML content, matching across tag boundaries with fuzzy fallback */
 function replaceTextInHtml(
   html: string,
   searchText: string,
   replacement: string
-): string | null {
+): { result: string | null; fuzzyMatch: boolean } {
   // Try direct replacement first (text within a single text node)
   if (html.includes(searchText)) {
-    return html.replace(searchText, replacement);
+    return { result: html.replace(searchText, replacement), fuzzyMatch: false };
   }
 
   // Try matching with HTML tags stripped for position finding
   const stripped = html.replace(/<[^>]*>/g, "");
-  if (!stripped.includes(searchText)) {
-    return null; // Text not found even after stripping tags
+  if (stripped.includes(searchText)) {
+    // Build a regex that allows HTML tags between characters of searchText
+    const escaped = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const flexiblePattern = escaped.split("").join("(?:<[^>]*>)*");
+    const regex = new RegExp(flexiblePattern);
+    const match = html.match(regex);
+
+    if (match) {
+      return { result: html.replace(match[0], replacement), fuzzyMatch: false };
+    }
   }
 
-  // Build a regex that allows HTML tags between characters of searchText
-  const escaped = searchText.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const flexiblePattern = escaped.split("").join("(?:<[^>]*>)*");
-  const regex = new RegExp(flexiblePattern);
-  const match = html.match(regex);
+  // Fuzzy matching: try trimmed/normalized whitespace version
+  const normalizedSearch = searchText.replace(/\s+/g, " ").trim();
+  const normalizedStripped = stripped.replace(/\s+/g, " ");
+  if (normalizedStripped.includes(normalizedSearch)) {
+    // Build regex with flexible whitespace
+    const escaped = normalizedSearch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const flexiblePattern = escaped
+      .split(" ")
+      .join("(?:<[^>]*>|\\s)+");
+    const regex = new RegExp(flexiblePattern);
+    const match = html.match(regex);
 
-  if (!match) {
-    return null;
+    if (match) {
+      return { result: html.replace(match[0], replacement), fuzzyMatch: true };
+    }
   }
 
-  return html.replace(match[0], replacement);
+  return { result: null, fuzzyMatch: false };
 }
 
 export async function POST(request: NextRequest) {
@@ -86,7 +101,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Apply fix
-  const updatedContent = replaceTextInHtml(
+  const { result: updatedContent, fuzzyMatch } = replaceTextInHtml(
     chapter.content,
     originalText,
     suggestedFix
@@ -96,7 +111,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         error:
-          "Could not find the original text in chapter content. The content may have changed since the analysis was run.",
+          "Chapter content has changed since analysis. Please re-run QA to get updated suggestions.",
+        code: "CONTENT_CHANGED",
       },
       { status: 409 }
     );
@@ -119,5 +135,6 @@ export async function POST(request: NextRequest) {
     chapterId,
     suggestionId,
     updatedWordCount,
+    fuzzyMatch,
   });
 }

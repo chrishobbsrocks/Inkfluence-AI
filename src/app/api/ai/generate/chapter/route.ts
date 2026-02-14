@@ -7,6 +7,10 @@ import { chapterGenerationRequestSchema } from "@/lib/validations/chapter-genera
 import { generateChapterContentStreaming } from "@/lib/ai/content-engine";
 import { updateChapterContent } from "@/server/mutations/chapters";
 import { countWords } from "@/lib/word-count";
+import {
+  checkAndIncrementRateLimit,
+  AI_RATE_LIMITS,
+} from "@/server/rate-limit";
 import type { ChapterGenerationContext } from "@/types/chapter-generation";
 import type { ConversationMessage } from "@/types/wizard";
 
@@ -58,6 +62,26 @@ export async function POST(request: NextRequest) {
   }
 
   const { chapterId, bookId, tone, expertise } = parseResult.data;
+
+  // Check rate limit
+  const rateLimit = await checkAndIncrementRateLimit(
+    user.id,
+    AI_RATE_LIMITS.chapterGeneration
+  );
+  if (!rateLimit.allowed) {
+    return NextResponse.json(
+      {
+        error: `Rate limit exceeded. You can generate up to ${AI_RATE_LIMITS.chapterGeneration.maxRequests} chapters per hour. Please try again later.`,
+      },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(rateLimit.retryAfterSeconds ?? 3600),
+          "X-RateLimit-Remaining": "0",
+        },
+      }
+    );
+  }
 
   // Verify chapter ownership
   const chapter = await getChapterById(chapterId, user.id);

@@ -7,9 +7,18 @@ import { outlineSections } from "./outline-sections";
 import { qaAnalyses } from "./qa-analyses";
 import { bookMetadata } from "./book-metadata";
 import { publishingPlatforms } from "./publishing-platforms";
+import { rateLimits } from "./rate-limits";
 
 export const usersRelations = relations(users, ({ many }) => ({
   books: many(books),
+  rateLimits: many(rateLimits),
+}));
+
+export const rateLimitsRelations = relations(rateLimits, ({ one }) => ({
+  user: one(users, {
+    fields: [rateLimits.userId],
+    references: [users.id],
+  }),
 }));
 
 export const booksRelations = relations(books, ({ one, many }) => ({
