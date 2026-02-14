@@ -3,12 +3,13 @@ sprint: 17
 title: "Metadata and Pre-publish Workflow"
 type: fullstack
 epic: 8
-status: planning
+status: in-progress
 created: 2026-02-13T13:13:41Z
-started: null
+started: 2026-02-13T17:48:30Z
 completed: null
 hours: null
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 17: Metadata and Pre-publish Workflow

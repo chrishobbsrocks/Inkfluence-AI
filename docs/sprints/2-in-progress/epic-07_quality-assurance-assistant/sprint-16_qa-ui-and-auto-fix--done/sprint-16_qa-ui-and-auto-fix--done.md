@@ -3,12 +3,13 @@ sprint: 16
 title: "QA UI and Auto Fix"
 type: fullstack
 epic: 7
-status: in-progress
+status: done
 created: 2026-02-13T13:13:40Z
 started: 2026-02-13T17:48:02Z
-completed: null
-hours: null
+completed: 2026-02-13
+hours: 0.4
 workflow_version: "3.1.0"
+
 
 ---
 
@@ -149,6 +150,30 @@ Follows the Server Component → Client Wrapper pattern. Server page fetches lat
 - [x] Empty state when no analysis exists
 - [x] Chapter filter via View button
 - [x] Loading states during operations
+
+## Postmortem
+
+### What went well
+- Clean separation following the established Server Component → Client Wrapper pattern
+- All 39 new tests passed after one minor fix (duplicate button text disambiguation)
+- Zero regressions across 573 total tests
+- Build passed cleanly on first try
+- HTML-aware text replacement in auto-fix handles text split across tags
+
+### What could improve
+- Auto-fix uses simple text find-and-replace which may fail on complex HTML structures
+- No dimension/severity filter UI — only chapter-level filtering via View button
+- The "Fix All Issues" operation is sequential which could feel slow with many suggestions
+
+### Lessons learned
+- When a component renders the same text in multiple locations (header + empty state), tests need `getAllBy*` queries instead of `getBy*`
+- Text replacement in HTML content needs a fallback strategy for when tags split the search text — building a flexible regex with `(?:<[^>]*>)*` between characters handles this
+- Sequential fix application is the right approach to avoid race conditions when multiple suggestions target the same chapter content
+
+### Metrics
+- Tests: 39 new (all passing), 573 total
+- Files: 17 created, 2 modified
+- Lines: +1,454 / -35
 
 ## Notes
 

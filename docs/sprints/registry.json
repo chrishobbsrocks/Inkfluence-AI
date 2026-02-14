@@ -156,13 +156,13 @@
     },
     "16": {
       "title": "QA UI and Auto Fix",
-      "status": "planning",
+      "status": "done",
       "epic": 7,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.2
     },
     "17": {
       "title": "Metadata and Pre-publish Workflow",
@@ -263,7 +263,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 16.0
     },
     "8": {

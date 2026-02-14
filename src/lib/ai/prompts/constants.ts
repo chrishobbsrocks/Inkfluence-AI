@@ -9,3 +9,5 @@ export const GENERATION_TEMPERATURE = 0.7;
 export const QA_TEMPERATURE = 0.2;
 export const QA_MAX_TOKENS = 4096;
 export const QA_CONSISTENCY_MAX_TOKENS = 2048;
+export const METADATA_MAX_TOKENS = 1024;
+export const METADATA_TEMPERATURE = 0.3;

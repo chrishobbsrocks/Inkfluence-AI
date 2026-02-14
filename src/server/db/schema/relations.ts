@@ -5,6 +5,7 @@ import { chapters } from "./chapters";
 import { outlines } from "./outlines";
 import { outlineSections } from "./outline-sections";
 import { qaAnalyses } from "./qa-analyses";
+import { bookMetadata } from "./book-metadata";
 
 export const usersRelations = relations(users, ({ many }) => ({
   books: many(books),
@@ -18,6 +19,7 @@ export const booksRelations = relations(books, ({ one, many }) => ({
   chapters: many(chapters),
   outlines: many(outlines),
   qaAnalyses: many(qaAnalyses),
+  bookMetadata: one(bookMetadata),
 }));
 
 export const chaptersRelations = relations(chapters, ({ one }) => ({
@@ -38,6 +40,13 @@ export const outlinesRelations = relations(outlines, ({ one, many }) => ({
 export const qaAnalysesRelations = relations(qaAnalyses, ({ one }) => ({
   book: one(books, {
     fields: [qaAnalyses.bookId],
+    references: [books.id],
+  }),
+}));
+
+export const bookMetadataRelations = relations(bookMetadata, ({ one }) => ({
+  book: one(books, {
+    fields: [bookMetadata.bookId],
     references: [books.id],
   }),
 }));

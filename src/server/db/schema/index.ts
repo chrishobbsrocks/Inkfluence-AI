@@ -5,4 +5,5 @@ export * from "./outlines";
 export * from "./outline-sections";
 export * from "./enums";
 export * from "./qa-analyses";
+export * from "./book-metadata";
 export * from "./relations";
