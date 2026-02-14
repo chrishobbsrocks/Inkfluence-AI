@@ -76,13 +76,13 @@
     },
     "8": {
       "title": "Outline Editor UI",
-      "status": "planning",
+      "status": "done",
       "epic": 4,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.4
     },
     "9": {
       "title": "AI Recommendations and Coverage",
@@ -233,7 +233,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 0,
+      "completedSprints": 1,
       "estimatedHours": 16.0
     },
     "5": {
