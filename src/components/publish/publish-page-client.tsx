@@ -2,28 +2,60 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Rocket } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { PrePublishChecklist } from "./pre-publish-checklist";
 import { MetadataCard } from "./metadata-card";
+import { PlatformManagementCard } from "./platform-management-card";
 import { saveBookMetadataAction } from "@/server/actions/book-metadata";
+import {
+  connectPlatformAction,
+  disconnectPlatformAction,
+  updatePlatformStatusAction,
+} from "@/server/actions/publishing-platforms";
+import { usePublish } from "@/hooks/use-publish";
 import type { PrePublishChecklistItem } from "@/types/book-metadata";
 import type { BookMetadata } from "@/server/db/schema/book-metadata";
+import type {
+  PlatformCardData,
+  PlatformStatus,
+} from "@/types/publishing-platform";
 
 export interface PublishPageClientProps {
   bookId: string;
   checklistItems: PrePublishChecklistItem[];
   metadata: BookMetadata | null;
+  platforms: PlatformCardData[];
+  templateId: string;
+  allChecksPassed: boolean;
 }
 
 export function PublishPageClient({
   bookId,
   checklistItems,
   metadata: initialMetadata,
+  platforms: initialPlatforms,
+  templateId,
+  allChecksPassed,
 }: PublishPageClientProps) {
   const router = useRouter();
   const [metadata, setMetadata] = useState(initialMetadata);
+  const [platforms, setPlatforms] = useState(initialPlatforms);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  const {
+    status: publishStatus,
+    progress,
+    error: publishError,
+    publishSelected,
+  } = usePublish({ bookId, templateId });
+
+  const isPublishing = publishStatus === "publishing";
+  const selectedCount = platforms.filter(
+    (p) => p.selected && p.connected
+  ).length;
+  const canPublish = allChecksPassed && selectedCount > 0 && !isPublishing;
 
   const handleGenerate = useCallback(async () => {
     setIsGenerating(true);
@@ -113,10 +145,127 @@ export function PublishPageClient({
     [bookId, router]
   );
 
+  const handleConnect = useCallback(
+    async (code: string) => {
+      const result = await connectPlatformAction({
+        bookId,
+        platformCode: code,
+      });
+      if (result.success) {
+        router.refresh();
+        setPlatforms((prev) =>
+          prev.map((p) =>
+            p.code === code
+              ? { ...p, connected: true, id: result.data.id }
+              : p
+          )
+        );
+      }
+    },
+    [bookId, router]
+  );
+
+  const handleDisconnect = useCallback(
+    async (code: string) => {
+      const result = await disconnectPlatformAction(bookId, code);
+      if (result.success) {
+        router.refresh();
+        setPlatforms((prev) =>
+          prev.map((p) =>
+            p.code === code
+              ? { ...p, connected: false, selected: false }
+              : p
+          )
+        );
+      }
+    },
+    [bookId, router]
+  );
+
+  const handleToggleSelect = useCallback((code: string) => {
+    setPlatforms((prev) =>
+      prev.map((p) =>
+        p.code === code ? { ...p, selected: !p.selected } : p
+      )
+    );
+  }, []);
+
+  const handleStatusChange = useCallback(
+    async (code: string, status: PlatformStatus) => {
+      const result = await updatePlatformStatusAction({
+        bookId,
+        platformCode: code,
+        status,
+      });
+      if (result.success) {
+        router.refresh();
+        setPlatforms((prev) =>
+          prev.map((p) => (p.code === code ? { ...p, status } : p))
+        );
+      }
+    },
+    [bookId, router]
+  );
+
+  const handlePublish = useCallback(() => {
+    publishSelected(platforms);
+  }, [platforms, publishSelected]);
+
   return (
     <div className="flex-1 bg-stone-50/50 p-5 overflow-y-auto">
       <PrePublishChecklist bookId={bookId} items={checklistItems} />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-5">
+
+      {/* Publish action bar */}
+      <div className="mt-4 flex items-center justify-between">
+        <div className="text-xs text-stone-500">
+          {selectedCount > 0
+            ? `${selectedCount} platform${selectedCount > 1 ? "s" : ""} selected`
+            : "Select platforms to publish"}
+        </div>
+        <Button
+          size="sm"
+          className="h-8 text-xs bg-stone-900 hover:bg-stone-800 gap-1.5"
+          disabled={!canPublish}
+          onClick={handlePublish}
+        >
+          {isPublishing ? (
+            <Loader2 className="w-3 h-3 animate-spin" />
+          ) : (
+            <Rocket className="w-3 h-3" />
+          )}
+          {isPublishing
+            ? "Publishing..."
+            : `Publish to ${selectedCount > 0 ? selectedCount : "All"} Selected`}
+        </Button>
+      </div>
+
+      {/* Publishing progress banner */}
+      {isPublishing && progress.currentPlatform && (
+        <div className="mt-3 p-3 bg-stone-900 text-white rounded-lg flex items-center gap-3">
+          <Loader2 className="w-4 h-4 animate-spin flex-shrink-0" />
+          <div className="text-xs">
+            <span className="font-medium">
+              Publishing to {progress.currentPlatform}
+            </span>
+            <span className="text-stone-400 ml-2">
+              ({progress.completed + 1}/{progress.total}) —{" "}
+              {progress.currentStep === "export"
+                ? "Generating file..."
+                : progress.currentStep === "metadata"
+                  ? "Downloading metadata..."
+                  : "Updating status..."}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {publishError && (
+        <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+          {publishError}
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <MetadataCard
           metadata={metadata}
           onGenerate={handleGenerate}
@@ -124,18 +273,14 @@ export function PublishPageClient({
           isGenerating={isGenerating}
           isSaving={isSaving}
         />
-        <Card className="border-stone-200">
-          <CardHeader className="p-3.5 pb-2 bg-stone-50 border-b border-stone-100">
-            <CardTitle className="text-xs font-semibold">
-              Publishing Platforms
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-3.5">
-            <p className="text-xs text-stone-400">
-              Platform connections coming soon.
-            </p>
-          </CardContent>
-        </Card>
+        <PlatformManagementCard
+          platforms={platforms}
+          onConnect={handleConnect}
+          onDisconnect={handleDisconnect}
+          onToggleSelect={handleToggleSelect}
+          onStatusChange={handleStatusChange}
+          disabled={isPublishing}
+        />
       </div>
     </div>
   );

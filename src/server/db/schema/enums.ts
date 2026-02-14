@@ -14,6 +14,11 @@ export const chapterStatusEnum = pgEnum("chapter_status", [
   "complete",
 ]);
 
+export const publishingPlatformStatusEnum = pgEnum(
+  "publishing_platform_status",
+  ["draft", "submitted", "published", "rejected"]
+);
+
 export const userPlanEnum = pgEnum("user_plan", [
   "free",
   "basic",

@@ -6,6 +6,7 @@ import { outlines } from "./outlines";
 import { outlineSections } from "./outline-sections";
 import { qaAnalyses } from "./qa-analyses";
 import { bookMetadata } from "./book-metadata";
+import { publishingPlatforms } from "./publishing-platforms";
 
 export const usersRelations = relations(users, ({ many }) => ({
   books: many(books),
@@ -20,6 +21,7 @@ export const booksRelations = relations(books, ({ one, many }) => ({
   outlines: many(outlines),
   qaAnalyses: many(qaAnalyses),
   bookMetadata: one(bookMetadata),
+  publishingPlatforms: many(publishingPlatforms),
 }));
 
 export const chaptersRelations = relations(chapters, ({ one }) => ({
