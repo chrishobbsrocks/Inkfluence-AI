@@ -86,13 +86,13 @@
     },
     "9": {
       "title": "AI Recommendations and Coverage",
-      "status": "planning",
+      "status": "done",
       "epic": 4,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.4
     },
     "10": {
       "title": "Rich Text Editor Setup",
@@ -233,7 +233,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 4,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 16.0
     },
     "5": {

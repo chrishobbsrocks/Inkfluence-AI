@@ -3,12 +3,13 @@ sprint: 13
 title: "Preview and Template System"
 type: fullstack
 epic: 6
-status: planning
+status: in-progress
 created: 2026-02-13T13:13:38Z
-started: null
+started: 2026-02-13T16:41:34Z
 completed: null
 hours: null
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 13: Preview and Template System
