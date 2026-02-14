@@ -9,16 +9,17 @@ const PHASE_TO_STEP: Record<WizardPhase, number> = {
   topic_exploration: 0,
   audience_definition: 1,
   expertise_extraction: 2,
-  gap_analysis: 3,
-  outline_generation: 4,
+  gap_analysis: 2,
+  outline_generation: 3,
 };
 
 interface WizardStepperProps {
   currentPhase: WizardPhase;
+  showingOutlinePreview?: boolean;
 }
 
-export function WizardStepper({ currentPhase }: WizardStepperProps) {
-  const activeStep = PHASE_TO_STEP[currentPhase];
+export function WizardStepper({ currentPhase, showingOutlinePreview }: WizardStepperProps) {
+  const activeStep = showingOutlinePreview ? 4 : PHASE_TO_STEP[currentPhase];
 
   return (
     <div className="flex items-center gap-0">

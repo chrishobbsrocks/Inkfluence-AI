@@ -138,10 +138,10 @@ export async function generateOutlineAction(
     outline.audience
   );
 
-  // Save sections to database
+  // Save sections to database (mark as AI-suggested since wizard generated them)
   const sectionsResult = await saveOutlineSections(
     outlineId,
-    generatedOutline.chapters
+    generatedOutline.chapters.map((ch) => ({ ...ch, aiSuggested: true }))
   );
   if (!sectionsResult.success) {
     return { success: false, error: sectionsResult.error };

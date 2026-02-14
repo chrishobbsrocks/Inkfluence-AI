@@ -87,6 +87,7 @@ export function WizardContainer({
     <div className="fixed inset-0 z-50 bg-white flex flex-col">
       <WizardHeader
         currentPhase={currentPhase}
+        showingOutlinePreview={showOutlinePreview}
         onSaveAndExit={handleSaveAndExit}
       />
 

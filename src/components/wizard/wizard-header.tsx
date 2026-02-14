@@ -7,12 +7,14 @@ import type { WizardPhase } from "@/types/wizard";
 
 interface WizardHeaderProps {
   currentPhase: WizardPhase;
+  showingOutlinePreview?: boolean;
   onSaveAndExit: () => void;
   isSaving?: boolean;
 }
 
 export function WizardHeader({
   currentPhase,
+  showingOutlinePreview = false,
   onSaveAndExit,
   isSaving = false,
 }: WizardHeaderProps) {
@@ -29,7 +31,7 @@ export function WizardHeader({
       </div>
 
       {/* Stepper */}
-      <WizardStepper currentPhase={currentPhase} />
+      <WizardStepper currentPhase={currentPhase} showingOutlinePreview={showingOutlinePreview} />
 
       {/* Save & Exit */}
       <Button

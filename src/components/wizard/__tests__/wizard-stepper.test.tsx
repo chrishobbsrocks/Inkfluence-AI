@@ -27,8 +27,23 @@ describe("WizardStepper", () => {
     expect(topicLabel).toHaveClass("text-stone-400");
   });
 
-  it("marks last step as active for outline_generation", () => {
+  it("marks Outline step as active for outline_generation", () => {
     render(<WizardStepper currentPhase="outline_generation" />);
+    const outlineLabel = screen.getByText("Outline");
+    expect(outlineLabel).toHaveClass("font-semibold", "text-stone-900");
+  });
+
+  it("keeps Expertise active during gap_analysis", () => {
+    render(<WizardStepper currentPhase="gap_analysis" />);
+    const expertiseLabel = screen.getByText("Expertise");
+    expect(expertiseLabel).toHaveClass("font-semibold", "text-stone-900");
+    // Outline should still be future
+    const outlineLabel = screen.getByText("Outline");
+    expect(outlineLabel).toHaveClass("text-stone-400");
+  });
+
+  it("marks Review as active when showingOutlinePreview is true", () => {
+    render(<WizardStepper currentPhase="outline_generation" showingOutlinePreview />);
     const reviewLabel = screen.getByText("Review");
     expect(reviewLabel).toHaveClass("font-semibold", "text-stone-900");
   });
