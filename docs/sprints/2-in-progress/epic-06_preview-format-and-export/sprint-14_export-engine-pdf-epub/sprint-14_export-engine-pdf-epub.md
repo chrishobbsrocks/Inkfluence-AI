@@ -3,12 +3,13 @@ sprint: 14
 title: "Export Engine PDF EPUB"
 type: fullstack
 epic: 6
-status: planning
+status: in-progress
 created: 2026-02-13T13:13:39Z
-started: null
+started: 2026-02-13T17:03:10Z
 completed: null
 hours: null
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 14: Export Engine PDF EPUB

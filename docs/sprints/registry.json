@@ -106,13 +106,13 @@
     },
     "11": {
       "title": "AI Content Generation Engine",
-      "status": "planning",
+      "status": "done",
       "epic": 5,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.4
     },
     "12": {
       "title": "AI Writing Assistant Panel",
@@ -243,7 +243,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 6,
-      "completedSprints": 1,
+      "completedSprints": 2,
       "estimatedHours": 24.0
     },
     "6": {

@@ -1,0 +1,69 @@
+{
+  "sprint_number": 13,
+  "sprint_file": "docs/sprints/2-in-progress/epic-06_preview-format-and-export/sprint-13_preview-and-template-system/sprint-13_preview-and-template-system.md",
+  "sprint_title": "Preview and Template System",
+  "status": "complete",
+  "current_phase": 4,
+  "current_step": "4.4",
+  "started_at": "2026-02-13T16:41:34Z",
+  "workflow_version": "3.0",
+  "completed_steps": [
+    {
+      "step": "1.1",
+      "completed_at": "2026-02-13T16:43:39.606155"
+    },
+    {
+      "step": "1.2",
+      "completed_at": "2026-02-13T16:48:31.119907"
+    },
+    {
+      "step": "1.3",
+      "completed_at": "2026-02-13T16:55:54.135279"
+    },
+    {
+      "step": "1.4",
+      "completed_at": "2026-02-13T16:55:56.558681"
+    },
+    {
+      "step": "2.1",
+      "completed_at": "2026-02-13T16:57:45.268634"
+    },
+    {
+      "step": "2.2",
+      "completed_at": "2026-02-13T16:57:58.634017"
+    },
+    {
+      "step": "2.3",
+      "completed_at": "2026-02-13T16:59:01.549719"
+    },
+    {
+      "step": "3.1",
+      "completed_at": "2026-02-13T16:59:54.877191"
+    },
+    {
+      "step": "3.2",
+      "completed_at": "2026-02-13T17:00:21.241482"
+    },
+    {
+      "step": "3.3",
+      "completed_at": "2026-02-13T17:00:21.281819"
+    },
+    {
+      "step": "3.4",
+      "completed_at": "2026-02-13T17:00:21.318828"
+    },
+    {
+      "step": "4.1",
+      "completed_at": "2026-02-13T17:00:50.128049"
+    },
+    {
+      "step": "4.2",
+      "completed_at": "2026-02-13T17:00:50.168980"
+    },
+    {
+      "step": "4.3",
+      "completed_at": "2026-02-13T17:01:34.604117"
+    }
+  ],
+  "completed_at": "2026-02-13T17:02:17.496152-08:00"
+}
