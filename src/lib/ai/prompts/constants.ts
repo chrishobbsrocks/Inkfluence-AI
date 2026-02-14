@@ -1,6 +1,8 @@
 export const AI_MODEL = "claude-sonnet-4-5-20250929";
 export const MAX_TOKENS = 4096;
 export const STREAM_MAX_TOKENS = 2048;
+export const GENERATION_MAX_TOKENS = 8192;
 export const TARGET_QUESTION_COUNT = 12;
 export const CHAT_TEMPERATURE = 0.7;
 export const OUTLINE_TEMPERATURE = 0.3;
+export const GENERATION_TEMPERATURE = 0.7;

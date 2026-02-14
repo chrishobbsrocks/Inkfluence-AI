@@ -1,4 +1,4 @@
-import { eq, and, asc, gt } from "drizzle-orm";
+import { eq, and, asc, gt, lt } from "drizzle-orm";
 import { db } from "@/server/db";
 import { chapters, books } from "@/server/db/schema";
 
@@ -12,6 +12,31 @@ export async function getChapterById(chapterId: string, userId: string) {
     .limit(1);
 
   return result[0]?.chapter ?? null;
+}
+
+/** Get previous chapters with content for context summaries */
+export async function getPreviousChapterSummaries(
+  bookId: string,
+  currentOrderIndex: number,
+  userId: string
+): Promise<Array<{ title: string; content: string | null }>> {
+  const result = await db
+    .select({
+      title: chapters.title,
+      content: chapters.content,
+    })
+    .from(chapters)
+    .innerJoin(books, eq(chapters.bookId, books.id))
+    .where(
+      and(
+        eq(chapters.bookId, bookId),
+        eq(books.userId, userId),
+        lt(chapters.orderIndex, currentOrderIndex)
+      )
+    )
+    .orderBy(asc(chapters.orderIndex));
+
+  return result;
 }
 
 /** Get all chapters for a book, ordered by orderIndex */

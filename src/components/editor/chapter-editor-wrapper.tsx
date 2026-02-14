@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useCallback, useRef } from "react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
@@ -8,7 +9,9 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ChapterEditorHeader } from "./chapter-editor-header";
 import { ChapterEditorLayout } from "./chapter-editor-layout";
+import { AiContentBlock } from "./extensions/ai-content-block";
 import { useChapterEditor } from "@/hooks/use-chapter-editor";
+import { useChapterGeneration } from "@/hooks/use-chapter-generation";
 import { countWords } from "@/lib/word-count";
 
 interface ChapterInfo {
@@ -38,6 +41,14 @@ export function ChapterEditorWrapper({
     bookId
   );
 
+  const generation = useChapterGeneration({
+    chapterId: currentChapter.id,
+    bookId,
+  });
+
+  const isGenerating =
+    generation.status === "loading" || generation.status === "streaming";
+
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -48,6 +59,7 @@ export function ChapterEditorWrapper({
       Placeholder.configure({
         placeholder: "Start writing your chapter...",
       }),
+      AiContentBlock,
     ],
     content: currentChapter.content ?? "",
     editorProps: {
@@ -65,6 +77,33 @@ export function ChapterEditorWrapper({
     },
   });
 
+  // Track previous streamed content length to avoid unnecessary updates
+  const prevContentLengthRef = useRef(0);
+
+  // Stream content into editor during generation (throttled by hook)
+  useEffect(() => {
+    if (!editor) return;
+    if (
+      generation.status === "streaming" &&
+      generation.streamedContent.length > prevContentLengthRef.current
+    ) {
+      prevContentLengthRef.current = generation.streamedContent.length;
+      const wrappedHtml = `<div data-ai-content="true">${generation.streamedContent}</div>`;
+      // false = don't emit onUpdate (prevents auto-save during streaming)
+      editor.commands.setContent(wrappedHtml, false);
+    }
+    if (generation.status === "complete" && generation.streamedContent) {
+      prevContentLengthRef.current = 0;
+      const wrappedHtml = `<div data-ai-content="true">${generation.streamedContent}</div>`;
+      // Triggers onUpdate -> auto-save
+      editor.commands.setContent(wrappedHtml);
+    }
+  }, [editor, generation.status, generation.streamedContent]);
+
+  const handleAiGenerate = useCallback(() => {
+    generation.generate("professional", "intermediate");
+  }, [generation]);
+
   return (
     <TooltipProvider>
       <ChapterEditorHeader
@@ -79,6 +118,8 @@ export function ChapterEditorWrapper({
         editor={editor}
         title={state.title}
         onTitleChange={(title) => dispatch({ type: "SET_TITLE", title })}
+        isGenerating={isGenerating}
+        onAiGenerate={handleAiGenerate}
       />
     </TooltipProvider>
   );

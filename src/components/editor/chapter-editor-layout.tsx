@@ -10,18 +10,26 @@ interface ChapterEditorLayoutProps {
   editor: Editor | null;
   title: string;
   onTitleChange: (title: string) => void;
+  isGenerating?: boolean;
+  onAiGenerate?: () => void;
 }
 
 export function ChapterEditorLayout({
   editor,
   title,
   onTitleChange,
+  isGenerating,
+  onAiGenerate,
 }: ChapterEditorLayoutProps) {
   return (
     <div className="flex-1 flex overflow-hidden">
       {/* Editor pane */}
       <div className="flex-1 flex flex-col min-w-0">
-        <EditorToolbar editor={editor} />
+        <EditorToolbar
+          editor={editor}
+          isGenerating={isGenerating}
+          onAiGenerate={onAiGenerate}
+        />
         <div className="flex-1 overflow-y-auto">
           <div className="max-w-3xl mx-auto py-8 px-6">
             <ChapterTitleInput title={title} onTitleChange={onTitleChange} />
