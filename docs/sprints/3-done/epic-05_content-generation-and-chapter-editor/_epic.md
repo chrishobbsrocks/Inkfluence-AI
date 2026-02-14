@@ -1,10 +1,12 @@
 ---
 epic: 5
 title: "Content Generation and Chapter Editor"
-status: planning
+status: done
 created: 2026-02-13
 started: null
-completed: null
+completed: 2026-02-13T17:27:06Z
+
+total_hours: 1.5
 ---
 
 # Epic 5: Content Generation and Chapter Editor

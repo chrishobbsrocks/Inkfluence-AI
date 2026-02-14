@@ -6,3 +6,6 @@ export const TARGET_QUESTION_COUNT = 12;
 export const CHAT_TEMPERATURE = 0.7;
 export const OUTLINE_TEMPERATURE = 0.3;
 export const GENERATION_TEMPERATURE = 0.7;
+export const QA_TEMPERATURE = 0.2;
+export const QA_MAX_TOKENS = 4096;
+export const QA_CONSISTENCY_MAX_TOKENS = 2048;

@@ -1,0 +1,69 @@
+{
+  "sprint_number": 12,
+  "sprint_file": "docs/sprints/2-in-progress/epic-05_content-generation-and-chapter-editor/sprint-12_ai-writing-assistant-panel/sprint-12_ai-writing-assistant-panel.md",
+  "sprint_title": "AI Writing Assistant Panel",
+  "status": "complete",
+  "current_phase": 4,
+  "current_step": "4.4",
+  "started_at": "2026-02-13T17:10:42Z",
+  "workflow_version": "3.0",
+  "completed_steps": [
+    {
+      "step": "1.1",
+      "completed_at": "2026-02-13T17:10:50.729687"
+    },
+    {
+      "step": "1.2",
+      "completed_at": "2026-02-13T17:15:47.901078"
+    },
+    {
+      "step": "1.3",
+      "completed_at": "2026-02-13T17:19:27.391976"
+    },
+    {
+      "step": "1.4",
+      "completed_at": "2026-02-13T17:19:27.429747"
+    },
+    {
+      "step": "2.1",
+      "completed_at": "2026-02-13T17:22:26.605310"
+    },
+    {
+      "step": "2.2",
+      "completed_at": "2026-02-13T17:22:29.747376"
+    },
+    {
+      "step": "2.3",
+      "completed_at": "2026-02-13T17:24:08.284182"
+    },
+    {
+      "step": "3.1",
+      "completed_at": "2026-02-13T17:24:08.320819"
+    },
+    {
+      "step": "3.2",
+      "completed_at": "2026-02-13T17:24:08.357896"
+    },
+    {
+      "step": "3.3",
+      "completed_at": "2026-02-13T17:24:08.394145"
+    },
+    {
+      "step": "3.4",
+      "completed_at": "2026-02-13T17:24:08.430560"
+    },
+    {
+      "step": "4.1",
+      "completed_at": "2026-02-13T17:24:08.466520"
+    },
+    {
+      "step": "4.2",
+      "completed_at": "2026-02-13T17:24:08.502489"
+    },
+    {
+      "step": "4.3",
+      "completed_at": "2026-02-13T17:25:23.511497"
+    }
+  ],
+  "completed_at": "2026-02-13T17:26:07.656080-08:00"
+}
