@@ -3,12 +3,13 @@ sprint: 18
 title: "Platform Management and Publishing"
 type: fullstack
 epic: 8
-status: planning
+status: done
 created: 2026-02-13T13:13:42Z
-started: null
-completed: null
-hours: null
+started: 2026-02-13T18:10:13Z
+completed: 2026-02-13T18:30:00Z
+hours: 0.3
 workflow_version: "3.1.0"
+
 ---
 
 # Sprint 18: Platform Management and Publishing
