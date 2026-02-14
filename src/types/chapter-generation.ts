@@ -31,8 +31,16 @@ export interface ChapterGenerationContext {
 export type GenerationSSEEvent =
   | { type: "text"; content: string }
   | { type: "metadata"; content: string }
+  | { type: "save_status"; content: string }
   | { type: "done"; content: string }
   | { type: "error"; content: string };
+
+/** Save status payload sent after stream completes */
+export interface SaveStatusPayload {
+  success: boolean;
+  chapterId?: string;
+  error?: string;
+}
 
 /** Metadata sent at end of generation stream */
 export interface GenerationMetadata {

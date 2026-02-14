@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { toast } from "sonner";
 import { stripStructuredTags } from "@/lib/ai/response-parser";
 import type {
   ConversationMessage,
@@ -25,7 +26,7 @@ interface UseStreamingChatReturn {
 }
 
 interface SSEEvent {
-  type: "text" | "metadata" | "done" | "error";
+  type: "text" | "metadata" | "save_status" | "done" | "error";
   content: string;
 }
 
@@ -116,6 +117,20 @@ export function useStreamingChat({
               case "metadata": {
                 const metadata = JSON.parse(parsed.content) as StreamMetadata;
                 setWizardState(metadata.wizardState);
+                break;
+              }
+
+              case "save_status": {
+                const saveStatus = JSON.parse(parsed.content) as {
+                  success: boolean;
+                  error?: string;
+                };
+                if (!saveStatus.success) {
+                  toast.error("Conversation not saved", {
+                    description: "Your latest exchange may be lost if you leave this page.",
+                    duration: 8000,
+                  });
+                }
                 break;
               }
 

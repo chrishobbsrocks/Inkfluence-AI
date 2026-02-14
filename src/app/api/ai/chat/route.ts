@@ -83,16 +83,12 @@ export async function POST(request: NextRequest) {
     outline.expertiseLevel
   );
 
-  // Get streaming response from Claude
-  const { stream, responsePromise } = await sendMessageStreaming(
+  // Get streaming response from Claude with save callback
+  const { stream } = await sendMessageStreaming(
     conversationHistory,
     message,
-    wizardState
-  );
-
-  // Save conversation history after stream completes (non-blocking)
-  responsePromise
-    .then(async (fullResponse) => {
+    wizardState,
+    async (fullResponse) => {
       const cleanResponse = stripStructuredTags(fullResponse);
       const updatedHistory: ConversationMessage[] = [
         ...conversationHistory,
@@ -100,10 +96,8 @@ export async function POST(request: NextRequest) {
         { role: "assistant", content: cleanResponse },
       ];
       await updateConversationHistory(outlineId, updatedHistory);
-    })
-    .catch((err) => {
-      console.error("Failed to save conversation history:", err);
-    });
+    }
+  );
 
   return new Response(stream, {
     headers: {

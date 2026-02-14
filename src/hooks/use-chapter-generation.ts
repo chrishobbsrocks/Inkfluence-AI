@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import { toast } from "sonner";
 import type {
   GenerationStatus,
   GenerationTone,
   GenerationExpertise,
   GenerationSSEEvent,
   GenerationMetadata,
+  SaveStatusPayload,
 } from "@/types/chapter-generation";
 
 interface UseChapterGenerationOptions {
@@ -128,6 +130,18 @@ export function useChapterGeneration({
                   parsed.content
                 ) as GenerationMetadata;
                 setWordCount(metadata.wordCount);
+                break;
+              }
+              case "save_status": {
+                const saveStatus = JSON.parse(
+                  parsed.content
+                ) as SaveStatusPayload;
+                if (!saveStatus.success) {
+                  toast.error("Content generated but not saved", {
+                    description: "Your content may be lost. Copy it manually before leaving this page.",
+                    duration: 10000,
+                  });
+                }
                 break;
               }
               case "done":

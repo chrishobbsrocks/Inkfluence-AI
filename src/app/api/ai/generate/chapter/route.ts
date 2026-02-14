@@ -144,21 +144,16 @@ export async function POST(request: NextRequest) {
   };
 
   try {
-    const { stream, responsePromise } =
-      await generateChapterContentStreaming(context);
-
-    // Save generated content after stream completes (non-blocking)
-    responsePromise
-      .then(async (fullContent) => {
+    const { stream } = await generateChapterContentStreaming(
+      context,
+      async (fullContent) => {
         await updateChapterContent(chapterId, {
           title: chapter.title,
           content: fullContent,
           wordCount: countWords(fullContent),
         });
-      })
-      .catch((err) => {
-        console.error("Failed to save generated chapter content:", err);
-      });
+      }
+    );
 
     return new Response(stream, {
       headers: {

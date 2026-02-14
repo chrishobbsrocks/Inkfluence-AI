@@ -56,6 +56,7 @@ export function OutlineEditorWrapper({
       <OutlineHeader
         bookTitle={bookTitle}
         bookId={bookId}
+        outlineId={outlineId}
         onAddChapter={addChapter}
       />
       <div className="flex-1 bg-stone-50/50 overflow-y-auto">

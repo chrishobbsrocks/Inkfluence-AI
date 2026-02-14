@@ -35,12 +35,32 @@ import { generatedOutlineSchema } from "@/lib/validations/wizard";
 // Re-export pure functions from wizard-state (client-safe module)
 export { determinePhase, deriveWizardState } from "./wizard-state";
 
+/** Save callback type for chat engine */
+export type ChatSaveCallback = (fullResponse: string) => Promise<void>;
+
+/** Retry a function with exponential backoff */
+async function withRetry<T>(
+  fn: () => Promise<T>,
+  maxAttempts: number = 3
+): Promise<T> {
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (attempt === maxAttempts) throw err;
+      await new Promise((r) => setTimeout(r, 500 * Math.pow(2, attempt - 1)));
+    }
+  }
+  throw new Error("Retry exhausted");
+}
+
 /** Send a message to Claude and return a streaming SSE response */
 export async function sendMessageStreaming(
   conversationHistory: ConversationMessage[],
   userMessage: string,
-  wizardState: WizardState
-): Promise<{ stream: ReadableStream<Uint8Array>; responsePromise: Promise<string> }> {
+  wizardState: WizardState,
+  onSave?: ChatSaveCallback
+): Promise<{ stream: ReadableStream<Uint8Array> }> {
   // Import deriveWizardState locally to avoid circular dependency issues
   const { deriveWizardState } = await import("./wizard-state");
 
@@ -69,17 +89,6 @@ export async function sendMessageStreaming(
   let fullText = "";
   const encoder = new TextEncoder();
 
-  const responsePromise = new Promise<string>((resolve, reject) => {
-    anthropicStream.finalMessage().then(
-      (msg) => {
-        const text =
-          msg.content[0]?.type === "text" ? msg.content[0].text : "";
-        resolve(text);
-      },
-      (err) => reject(err)
-    );
-  });
-
   const readable = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
@@ -89,7 +98,7 @@ export async function sendMessageStreaming(
           controller.enqueue(encoder.encode(`data: ${chunk}\n\n`));
         });
 
-        anthropicStream.on("end", () => {
+        anthropicStream.on("end", async () => {
           // Parse structured data from full response
           const gaps = parseGapSuggestions(fullText);
           const phaseSignal = parsePhaseSignal(fullText);
@@ -120,6 +129,24 @@ export async function sendMessageStreaming(
           });
           controller.enqueue(encoder.encode(`data: ${metaChunk}\n\n`));
 
+          // Save with retry and send save status
+          if (onSave) {
+            let saveSuccess = true;
+            let saveError: string | undefined;
+            try {
+              await withRetry(() => onSave(fullText));
+            } catch (err) {
+              console.error("Failed to save conversation after retries:", err);
+              saveSuccess = false;
+              saveError = err instanceof Error ? err.message : "Save failed";
+            }
+            const saveChunk = JSON.stringify({
+              type: "save_status",
+              content: JSON.stringify({ success: saveSuccess, error: saveError }),
+            });
+            controller.enqueue(encoder.encode(`data: ${saveChunk}\n\n`));
+          }
+
           const doneChunk = JSON.stringify({ type: "done", content: "" });
           controller.enqueue(encoder.encode(`data: ${doneChunk}\n\n`));
 
@@ -145,7 +172,7 @@ export async function sendMessageStreaming(
     },
   });
 
-  return { stream: readable, responsePromise };
+  return { stream: readable };
 }
 
 /** Generate a structured outline from conversation history */
