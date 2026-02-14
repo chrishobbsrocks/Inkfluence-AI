@@ -6,7 +6,7 @@ import {
   type Outline,
   type OutlineSection,
 } from "@/server/db/schema";
-import type { ConversationMessage, GeneratedChapter } from "@/types/wizard";
+import type { ConversationMessage } from "@/types/wizard";
 
 export type MutationResult<T> =
   | { success: true; data: T }
@@ -56,7 +56,12 @@ export async function updateConversationHistory(
 /** Save outline sections (atomic replace: delete existing, insert new) */
 export async function saveOutlineSections(
   outlineId: string,
-  chapters: GeneratedChapter[]
+  chapters: Array<{
+    chapterTitle: string;
+    keyPoints: string[];
+    orderIndex: number;
+    aiSuggested?: boolean;
+  }>
 ): Promise<MutationResult<OutlineSection[]>> {
   // Delete existing sections for this outline
   await db
@@ -69,7 +74,7 @@ export async function saveOutlineSections(
     chapterTitle: chapter.chapterTitle,
     keyPoints: chapter.keyPoints,
     orderIndex: chapter.orderIndex,
-    aiSuggested: false,
+    aiSuggested: chapter.aiSuggested ?? false,
   }));
 
   const result = await db.insert(outlineSections).values(values).returning();

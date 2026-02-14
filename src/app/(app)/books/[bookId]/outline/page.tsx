@@ -4,7 +4,7 @@ import { getUserByClerkId } from "@/server/queries/users";
 import { getBookById } from "@/server/queries/books";
 import { getOutlineByBookId, getOutlineWithSections } from "@/server/queries/outlines";
 import { WizardContainer } from "@/components/wizard";
-import { OutlineDisplay, OutlineHeader } from "@/components/outline";
+import { OutlineEditorWrapper } from "@/components/outline";
 import { parseGapSuggestions } from "@/lib/ai/response-parser";
 import type { ConversationMessage } from "@/types/wizard";
 
@@ -50,13 +50,22 @@ export default async function OutlinePage({
       .filter((m) => m.role === "assistant")
       .flatMap((m) => parseGapSuggestions(m.content));
 
+    const editorSections = sections.map((s) => ({
+      id: s.id,
+      chapterTitle: s.chapterTitle,
+      keyPoints: (s.keyPoints as string[]) ?? [],
+      orderIndex: s.orderIndex,
+      aiSuggested: s.aiSuggested ?? false,
+    }));
+
     return (
-      <>
-        <OutlineHeader bookTitle={book.title} />
-        <div className="flex-1 bg-stone-50/50 overflow-y-auto">
-          <OutlineDisplay sections={sections} gaps={gaps} />
-        </div>
-      </>
+      <OutlineEditorWrapper
+        bookId={bookId}
+        bookTitle={book.title}
+        outlineId={outline.id}
+        initialSections={editorSections}
+        gaps={gaps}
+      />
     );
   }
 

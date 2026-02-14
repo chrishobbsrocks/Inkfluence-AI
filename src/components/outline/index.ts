@@ -2,3 +2,8 @@ export { OutlineDisplay } from "./outline-display";
 export { OutlineChapterItem } from "./outline-chapter-item";
 export { OutlineHeader } from "./outline-header";
 export { AiRecommendationsPanel } from "./ai-recommendations-panel";
+export { OutlineEditor } from "./outline-editor";
+export { OutlineEditorWrapper } from "./outline-editor-wrapper";
+export { EditableChapterItem } from "./editable-chapter-item";
+export { EditableSubSection } from "./editable-sub-section";
+export { AddChapterButton } from "./add-chapter-button";
