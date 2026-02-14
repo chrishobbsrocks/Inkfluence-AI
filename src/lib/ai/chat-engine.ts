@@ -11,6 +11,12 @@ import {
   outlineGenerationTool,
 } from "./prompts/outline-generation";
 import {
+  buildOutlineAnalysisPrompt,
+  outlineAnalysisTool,
+} from "./prompts/outline-analysis";
+import { outlineAnalysisSchema } from "@/lib/validations/outline-analysis";
+import type { OutlineAnalysis } from "@/types/outline-analysis";
+import {
   parseGapSuggestions,
   parsePhaseSignal,
   stripStructuredTags,
@@ -170,6 +176,52 @@ export async function generateOutline(
   }
 
   return parsed.data;
+}
+
+/** Analyze an outline and return suggestions + coverage assessment */
+export async function analyzeOutline(
+  chapters: Array<{ chapterTitle: string; keyPoints: string[] }>,
+  topic: string,
+  audience: string | null
+): Promise<OutlineAnalysis> {
+  const client = getAnthropicClient();
+  const prompt = buildOutlineAnalysisPrompt(chapters, topic, audience);
+
+  const response = await client.messages.create({
+    model: AI_MODEL,
+    max_tokens: MAX_TOKENS,
+    temperature: OUTLINE_TEMPERATURE,
+    messages: [{ role: "user", content: prompt }],
+    tools: [outlineAnalysisTool],
+    tool_choice: { type: "tool", name: "analyze_outline" },
+  });
+
+  const toolBlock = response.content.find((block) => block.type === "tool_use");
+  if (!toolBlock || toolBlock.type !== "tool_use") {
+    throw new Error(
+      "Claude did not return a tool_use block for outline analysis"
+    );
+  }
+
+  const parsed = outlineAnalysisSchema.safeParse(toolBlock.input);
+  if (!parsed.success) {
+    throw new Error(
+      `Invalid analysis structure from Claude: ${parsed.error.issues[0]?.message}`
+    );
+  }
+
+  // Add stable IDs to suggestions
+  const suggestions = parsed.data.suggestions.map((s, i) => ({
+    ...s,
+    id: `suggestion-${i}-${Date.now()}`,
+  }));
+
+  return {
+    suggestions,
+    coverage: parsed.data.coverage,
+    overallScore: parsed.data.overallScore,
+    summary: parsed.data.summary,
+  };
 }
 
 /** Send a single non-streaming message (used for starting the wizard) */

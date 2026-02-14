@@ -96,13 +96,13 @@
     },
     "10": {
       "title": "Rich Text Editor Setup",
-      "status": "planning",
+      "status": "done",
       "epic": 5,
       "type": "fullstack",
       "created": "2026-02-13",
       "started": null,
-      "completed": null,
-      "hours": null
+      "completed": "2026-02-13",
+      "hours": 8.2
     },
     "11": {
       "title": "AI Content Generation Engine",
@@ -243,7 +243,7 @@
       "started": null,
       "completed": null,
       "totalSprints": 6,
-      "completedSprints": 0,
+      "completedSprints": 1,
       "estimatedHours": 24.0
     },
     "6": {
